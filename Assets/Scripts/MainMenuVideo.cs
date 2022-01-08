@@ -45,7 +45,7 @@ public class MainMenuVideo : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("MainHub");
     }
 
 //skips to 8 seconds, 480 frames
