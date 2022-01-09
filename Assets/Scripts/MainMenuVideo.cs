@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuVideo : MonoBehaviour
 {
-    VideoPlayer BackgroundVideo;
+    public VideoPlayer BackgroundVideo;
     public GameObject Note;
 
     // Start is called before the first frame update
@@ -46,6 +46,11 @@ public class MainMenuVideo : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("MainHub");
+    }
+
+    public void DevSkip()
+    {
+        BackgroundVideo.frame = 1860;
     }
 
 //skips to 8 seconds, 480 frames
