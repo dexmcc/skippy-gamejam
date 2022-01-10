@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class HubManager : MonoBehaviour
 {
     GameObject exploreScript;
     ExploreManager exploreManager;
     GameObject explore;
+    GameObject ending;
+    GameObject hub;
+
+    GameObject buttons;
 
     public Slider healthBar;
     float maxHunger = 10f;
@@ -28,11 +33,20 @@ public class HubManager : MonoBehaviour
     public GameObject[] explorationObjects1 = new GameObject[4];
     public GameObject[] explorationObjects2 = new GameObject[4];
 
+    public VideoPlayer endingCutscene;
+
+    bool endingFlag;
+
     public void Start()
     {
+        endingFlag = false;
+        hub = GameObject.Find("MainHub");
         exploreScript = GameObject.Find("ExploreManager");
         explore = GameObject.Find("Exploring");
+        ending = GameObject.Find("Ending");
+        buttons = GameObject.Find("Buttons");
         explore.SetActive(false);
+        ending.SetActive(false);
 
         exploreManager = exploreScript.GetComponent<ExploreManager>();
 
@@ -72,6 +86,15 @@ public class HubManager : MonoBehaviour
         //update explore bar
         float exploreFill = currentExplore / maxExplore;
         exploreBar.value = exploreFill;
+
+        if (endingFlag)
+        {
+            if ((endingCutscene.frame) > 0 && ((endingCutscene.isPlaying == false) || ((long) endingCutscene.frame == (long) (endingCutscene.frameCount - ((long) 1)))))
+            { 
+                endingFlag = false;
+                SceneManager.LoadScene("MainMenu");
+            }
+        }
 
     }
 
@@ -137,4 +160,14 @@ public class HubManager : MonoBehaviour
         explorations[(int)currentExplore] = choice;
     }
 
+    public void StartEnding()
+    {
+        endingFlag = true;
+        buttons.SetActive(false);
+        explore.SetActive(false);
+        hub.SetActive(false);
+        ending.SetActive(true);
+        endingCutscene.Play();
+    }
+    
 }

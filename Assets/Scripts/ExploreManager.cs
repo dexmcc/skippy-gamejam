@@ -60,6 +60,10 @@ public class ExploreManager : MonoBehaviour
         hubManager.ExploreUpdate();
         choices.SetActive(false);
         hubManager.RenderExplorationObjects();
+        if (nextExplore == 3)
+        {
+            hubManager.StartEnding();
+        }
     }
 
     public void Update()
