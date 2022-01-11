@@ -20,6 +20,7 @@ public class EatMinigameGameManager : MonoBehaviour
 
         SpawnFood();
 
+        // Center the player on the screen to start
         player.transform.position = main.ViewportToWorldPoint(new Vector2(.5f, .5f));
         player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, 0);
     }
@@ -39,6 +40,7 @@ public class EatMinigameGameManager : MonoBehaviour
     }
 
 
+    // Food are spawned like normal objects, then given a gamemanager (this instance of this class)
     public GameObject SpawnFood()
     {
         GameObject food = SpawnObject(foodPrefab);
@@ -47,6 +49,7 @@ public class EatMinigameGameManager : MonoBehaviour
     }
 
 
+    // Enemies are spawned like normal objects, then given a target (the player)
     public GameObject SpawnEnemy()
     {
         GameObject enemy = SpawnObject(enemyPrefab);
@@ -58,6 +61,7 @@ public class EatMinigameGameManager : MonoBehaviour
     }
 
 
+    // All objects are spawned in a random area within the camera bounds
     public GameObject SpawnObject(GameObject prefab)
     {
         GameObject ob = Instantiate(prefab);

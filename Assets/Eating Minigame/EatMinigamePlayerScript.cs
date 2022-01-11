@@ -57,8 +57,11 @@ public class EatMinigamePlayerScript : MonoBehaviour
     {
 
         Vector2 newPos = rb.position + (move * speed * Time.fixedDeltaTime); 
+
+        // Check if the new position is within the bounds of the camera
         Vector3 viewPoint = main.WorldToViewportPoint(newPos);
 
+        // Clamp the position in the camera
         viewPoint.x = Mathf.Clamp(viewPoint.x, 0, 1);
         viewPoint.y = Mathf.Clamp(viewPoint.y, 0, 1);
 
@@ -75,6 +78,7 @@ public class EatMinigamePlayerScript : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // Only gameobject with trigger is food, this checks if the player is interacing with food
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject ob = collision.gameObject;
