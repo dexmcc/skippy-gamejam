@@ -8,19 +8,20 @@ using UnityEngine;
 public class DreamMinigamePlayerScript : MonoBehaviour
 {
 
-    public DreamMinigameCharacterController controller; 
+    public DreamMinigameCharacterController controller;
 
+    Camera main; 
     Rigidbody2D rb;
-    int moveX = 0;
-    float jumpForce = 10f;
-    public float horizontalSpeed = 1f;
 
+    public float horizontalSpeed = 30f;
+    int moveX = 0;
     bool jump = false; 
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        main = Camera.main; 
     }
 
     // Update is called once per frame
@@ -54,7 +55,25 @@ public class DreamMinigamePlayerScript : MonoBehaviour
     private void FixedUpdate()
     {
         controller.Move(moveX * Time.fixedDeltaTime * horizontalSpeed, false, jump);
-        jump = false; 
-        //rb.MovePosition(rb.position + new Vector2(moveX * horizontalSpeed * Time.fixedDeltaTime, 0));
+        jump = false;
+
+        CheckDead();
+    }
+
+    private void CheckDead()
+    {
+        Vector3 viewPoint = main.WorldToViewportPoint(transform.position);
+
+        if (viewPoint.y < -.3)
+        {
+            Kill();
+        }
+
+    }
+
+    public void Kill()
+    {
+        // Game over logic will go here
+        Destroy(gameObject);
     }
 }
