@@ -13,7 +13,11 @@ public class DreamMinigameGameManager : MonoBehaviour
     public GameObject platformPrefab;
 
     public GameObject player;
-    public GameObject playerPrefab; 
+    public GameObject playerPrefab;
+    public GameObject dropEnemyPrefab;
+    public GameObject walkEnemyPrefab;
+
+    DreamMinigamePlayerScript playerScript;
 
     public float minYOffset = 3f;
     public float maxYOffset = 5f;
@@ -21,10 +25,16 @@ public class DreamMinigameGameManager : MonoBehaviour
 
     int platformNum = 10;
 
-    public float downSpeed = 1f;
+    public float downSpeed = 1.5f;
 
+    float middleX;
 
-    float middleX; 
+    int score = 0;
+
+    float dropEnemyTime = 3.0f;
+    public float minDropEnemyTime = 2.0f; 
+    public float dropEnemyTimeOffset = 1.0f;
+    public int walkEnemyChance = 40; 
 
 
     Camera main;
@@ -37,6 +47,13 @@ public class DreamMinigameGameManager : MonoBehaviour
         middleX = main.ViewportToWorldPoint(new Vector3(.5f, 0, 0)).x; 
 
         initializePlatforms();
+    }
+
+    private void FixedUpdate()
+    {
+        MoveAllObjects();
+        UpdatePlatforms();
+        CheckDropEnemy();
     }
 
     void initializePlatforms()
@@ -59,36 +76,117 @@ public class DreamMinigameGameManager : MonoBehaviour
         allObjects.Add(player);
         player.transform.position = platforms.Peek().transform.position;
 
+        playerScript = player.GetComponent<DreamMinigamePlayerScript>();
+        playerScript.gameManager = this; 
+
         player.transform.Translate(new Vector3(0, 2, 0));
+
         
+    }
+
+    public void AddScore()
+    {
+        score++;
     }
 
 
     void ResetPlatform(GameObject platform)
     {
+
+        DreamMinigamePlatformLogic script = platform.GetComponent<DreamMinigamePlatformLogic>();
+        script.jumpedOn = false; 
         
         if (highestPlatform != null)
         {
 
-            float rawXOffset = Random.Range(2f, xOffset);
-            float xSign = Mathf.Sign(Random.Range(-1, 1));
+            DreamMinigamePlatformLogic highestScript = highestPlatform.GetComponent<DreamMinigamePlatformLogic>();
+            int posNum = 0; 
 
-            platform.transform.position = new Vector3(highestPlatform.transform.position.x + (rawXOffset * xSign), highestPlatform.transform.position.y + Random.Range(minYOffset, maxYOffset), 0);
+            do
+            {
+                posNum = Random.Range(0, 3);
+            } while (posNum == highestScript.posNum);
+
+
+            script.posNum = posNum;
+
+            float xCamPos = 0; 
+
+            // Left
+            if (posNum == 0)
+            {
+                xCamPos = .1f; 
+            }
+            else if (posNum == 1)
+            {
+                xCamPos = .5f; 
+            }
+            else
+            {
+                xCamPos = .9f; 
+            }
+
+            float newX = main.ViewportToWorldPoint(new Vector3(xCamPos, 0, 0)).x;
+
+
+            //float rawXOffset = Random.Range(2f, xOffset);
+            //float xSign = Mathf.Sign(Random.Range(-1, 1));
+
+            //platform.transform.position = new Vector3(highestPlatform.transform.position.x + (rawXOffset * xSign), highestPlatform.transform.position.y + Random.Range(minYOffset, maxYOffset), 0);
+
+            platform.transform.position = new Vector3(Mathf.Clamp(newX, highestPlatform.transform.position.x - xOffset, highestPlatform.transform.position.x + xOffset), highestPlatform.transform.position.y + Random.Range(minYOffset, maxYOffset), 0);
 
             Vector3 platformCameraPos = main.WorldToViewportPoint(platform.transform.position);
             platformCameraPos.x = Mathf.Clamp(platformCameraPos.x, 0, 1);
             platform.transform.position = main.ViewportToWorldPoint(platformCameraPos);
 
-            highestPlatform = platform;
+
+            int ran = Random.Range(0, 100);
+
+            if (ran <= walkEnemyChance)
+            {
+                SpawnWalkEnemy(new Vector3(platform.transform.position.x, platform.transform.position.y + 1f, 0));
+            }
+
         }
         else
         {
-            platform.transform.position = new Vector3(middleX, 0, 0);
-            highestPlatform = platform;
+            script.posNum = 1; 
+            platform.transform.position = new Vector3(middleX, -3.0f, 0);
         }
+
+        highestPlatform = platform;
     }
 
 
+    void SpawnWalkEnemy(Vector3 position)
+    {
+        GameObject enemy = Instantiate(walkEnemyPrefab);
+
+        enemy.transform.position = position;
+
+        allObjects.Add(enemy);
+    }
+
+    void CheckDropEnemy()
+    {
+        if (dropEnemyTime > 0)
+        {
+            dropEnemyTime -= Time.fixedDeltaTime; 
+        }
+        else
+        {
+            GameObject enemy = Instantiate(dropEnemyPrefab);
+
+            Vector3 newPos = main.ViewportToWorldPoint(new Vector3(Random.value, 1.5f, 0));
+            newPos.z = 0; 
+            enemy.transform.position = newPos;
+
+            allObjects.Add(enemy);
+
+            dropEnemyTime = minDropEnemyTime + Random.Range(0, dropEnemyTimeOffset);
+        }
+    }
 
     void UpdatePlatforms()
     {
@@ -113,13 +211,28 @@ public class DreamMinigameGameManager : MonoBehaviour
     {
         for (int i = 0; i < allObjects.Count; i++)
         {
-            allObjects[i].transform.Translate(new Vector3(0, -downSpeed * Time.fixedDeltaTime, 0));
+            if (allObjects[i] != null)
+            {
+                allObjects[i].transform.Translate(new Vector3(0, -downSpeed * Time.fixedDeltaTime, 0));
+            }
         }
     }
 
-    private void FixedUpdate()
+    public void SpeedUp()
     {
-        MoveAllObjects();
-        UpdatePlatforms();
+        playerScript.horizontalSpeed *= 1.02f;
+        downSpeed *= 1.03f; 
+
     }
+
+    public void OnPlayerJumpedOnPlatform()
+    {
+        AddScore();
+        SpeedUp();
+        minDropEnemyTime *= .9f; 
+    }
+
+    
+
+    
 }

@@ -169,6 +169,15 @@ MonoBehaviour:
   platformPrefab: {fileID: 5351830030042741102, guid: 95f7b9f6806134c4eba73887523fe0bc, type: 3}
   player: {fileID: 0}
   playerPrefab: {fileID: 2475635995267609364, guid: 41ffbedb3aafbdc45b0ef699026e32a6, type: 3}
+  dropEnemyPrefab: {fileID: 844167084390202779, guid: ad0d3ebaa5ffec44fa597fb355068440, type: 3}
+  walkEnemyPrefab: {fileID: 9020679707806727099, guid: 7bfbb65483b03d8459abb5a7aa2044bb, type: 3}
+  minYOffset: 5
+  maxYOffset: 6
+  xOffset: 10
+  downSpeed: 1.25
+  minDropEnemyTime: 1.5
+  dropEnemyTimeOffset: 1
+  walkEnemyChance: 40
 --- !u!1 &1743005542
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +231,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

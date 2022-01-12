@@ -9,13 +9,15 @@ public class DreamMinigamePlayerScript : MonoBehaviour
 {
 
     public DreamMinigameCharacterController controller;
+    public DreamMinigameGameManager gameManager; 
 
     Camera main; 
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
 
     public float horizontalSpeed = 30f;
     int moveX = 0;
-    bool jump = false; 
+    bool jump = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -75,5 +77,27 @@ public class DreamMinigamePlayerScript : MonoBehaviour
     {
         // Game over logic will go here
         Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            DreamMinigamePlatformLogic script = collision.gameObject.GetComponent<DreamMinigamePlatformLogic>();
+
+            if (script != null)
+            {
+                if (script.jumpedOn == false)
+                {
+                    gameManager.OnPlayerJumpedOnPlatform();
+                    script.jumpedOn = true;
+                }
+            }
+        }
+
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            Kill();
+        }
     }
 }
