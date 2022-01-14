@@ -7,6 +7,9 @@ using UnityEngine.Video;
 
 public class HubManager : MonoBehaviour
 {
+
+    
+
     GameObject exploreScript;
     ExploreManager exploreManager;
     GameObject explore;
@@ -16,15 +19,15 @@ public class HubManager : MonoBehaviour
     GameObject buttons;
 
     public Slider healthBar;
-    float maxHunger = 10f;
-    float currentHunger = 5f;
+    //float maxHunger = 10f;
+    //float currentHunger = 0f;
     public Image hungerFillImage;
 
     public Slider exploreBar;
     public Image exploreFillImage;
 
-    float maxExplore = 4f;
-    float currentExplore = 0f;
+    int maxExplore = 4;
+    int currentExplore = 0;
 
     //0 will say not explored yet, 1 and 2 show which of two options is chosen
     int[] explorations;
@@ -34,6 +37,11 @@ public class HubManager : MonoBehaviour
     public GameObject[] explorationObjects2 = new GameObject[4];
 
     public VideoPlayer endingCutscene;
+
+
+    public Slider sleepBar;
+    public Slider hungerBar;
+    public Slider explorationBar;
 
     bool endingFlag;
 
@@ -45,6 +53,7 @@ public class HubManager : MonoBehaviour
         explore = GameObject.Find("Exploring");
         ending = GameObject.Find("Ending");
         buttons = GameObject.Find("Buttons");
+
         explore.SetActive(false);
         ending.SetActive(false);
 
@@ -56,36 +65,12 @@ public class HubManager : MonoBehaviour
         {
             explorations[i] = 0;
         }
+
+        UpdateSliders();
     }
 
     public void FixedUpdate()
     {
-
-        //disable hunger bar fill if empty and re-enable it if not
-        if (healthBar.value <= healthBar.minValue)
-        {
-            hungerFillImage.enabled = false;
-        }
-        if (healthBar.value >= healthBar.minValue && !hungerFillImage.enabled)
-        {
-            hungerFillImage.enabled = true;
-        }
-        //update hunger bar
-        float hungerFill = currentHunger / maxHunger;
-        healthBar.value = hungerFill;
-
-        //disable explore bar fill if empty and re-enable it if not
-        if (exploreBar.value <= exploreBar.minValue)
-        {
-            exploreFillImage.enabled = false;
-        }
-        if (exploreBar.value >= exploreBar.minValue && !exploreFillImage.enabled)
-        {
-            exploreFillImage.enabled = true;
-        }
-        //update explore bar
-        float exploreFill = currentExplore / maxExplore;
-        exploreBar.value = exploreFill;
 
         if (endingFlag)
         {
@@ -98,17 +83,31 @@ public class HubManager : MonoBehaviour
 
     }
 
-    public void FeedButton()
+
+    public void UpdateSliders()
     {
-        //SceneManager.LoadScene("SampleScene");
-        Debug.Log("feed");
+        sleepBar.value = (Global.getInstance().sleepStat / 100.0f);
+        hungerBar.value = (Global.getInstance().foodStat / 100.0f);
+        explorationBar.value = (Global.getInstance().explorationStat / 100.0f);
     }
 
-    public void CleanButton()
+
+    public void FeedButton()
     {
-        //SceneManager.LoadScene("SampleScene");
-        Debug.Log("clean");
+        SceneManager.LoadScene("EatingMinigame");
     }
+
+    public void SleepButton()
+    {
+        SceneManager.LoadScene("DreamMinigame");
+    }
+
+    /*public void CleanButton()
+    {
+        SceneManager.LoadScene("CleaningMinigame");
+        //SceneManager.LoadScene("SampleScene");
+        //Debug.Log("clean");
+    }*/
 
     public void ExploreButton()
     {
@@ -152,21 +151,23 @@ public class HubManager : MonoBehaviour
 
     public void ExploreUpdate()
     {
-        currentExplore = currentExplore + 1f;
+        currentExplore = currentExplore + 1;
     }
 
     public void SetObject(int choice)
     {
-        explorations[(int)currentExplore] = choice;
+        explorations[currentExplore] = choice;
     }
 
     public void StartEnding()
     {
         endingFlag = true;
+
         buttons.SetActive(false);
         explore.SetActive(false);
         hub.SetActive(false);
         ending.SetActive(true);
+
         endingCutscene.Play();
     }
     

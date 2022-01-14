@@ -53,13 +53,17 @@ public class ExploreManager : MonoBehaviour
     {
         pauseFlag = true;
         exploreActive = false;
+
         nextExplore = hubManager.getExploreCount();
         hub.SetActive(true);
+
         exploreFilms[nextExplore].SetActive(false);
         explore.SetActive(false);
+
         hubManager.ExploreUpdate();
         choices.SetActive(false);
         hubManager.RenderExplorationObjects();
+
         if (nextExplore == 3)
         {
             hubManager.StartEnding();

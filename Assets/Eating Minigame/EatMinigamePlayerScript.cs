@@ -23,7 +23,7 @@ public class EatMinigamePlayerScript : MonoBehaviour
     void Update()
     {
 
-        //Vector2 move = new Vector2(0, 0);
+        // Input! Hard coded right now :P
         
         if (Input.GetKey(KeyCode.A))
         {
@@ -53,6 +53,7 @@ public class EatMinigamePlayerScript : MonoBehaviour
         }
     }
 
+    // Handles Movement
     private void FixedUpdate()
     {
 
@@ -74,8 +75,9 @@ public class EatMinigamePlayerScript : MonoBehaviour
     public void Kill()
     {
         // Here logic will go to take to main menu n such
-
-        Destroy(gameObject);
+        // TODO, something like an animation instead of just going straight to the hub
+        Global.getInstance().gotoHubArea();
+        //Destroy(gameObject);
     }
 
     // Only gameobject with trigger is food, this checks if the player is interacing with food

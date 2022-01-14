@@ -76,7 +76,10 @@ public class DreamMinigamePlayerScript : MonoBehaviour
     public void Kill()
     {
         // Game over logic will go here
-        Destroy(gameObject);
+        //Destroy(gameObject);
+
+        // TODO, something like an animation instead of just going straight to the hub
+        Global.getInstance().gotoHubArea();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

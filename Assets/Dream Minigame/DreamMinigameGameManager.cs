@@ -5,36 +5,41 @@ using UnityEngine;
 public class DreamMinigameGameManager : MonoBehaviour
 {
 
-    Queue<GameObject> platforms = new Queue<GameObject>(); 
-    GameObject highestPlatform = null;
-
-    List<GameObject> allObjects;
-
     public GameObject platformPrefab;
-
-    public GameObject player;
     public GameObject playerPrefab;
     public GameObject dropEnemyPrefab;
     public GameObject walkEnemyPrefab;
-
-    DreamMinigamePlayerScript playerScript;
+    
 
     public float minYOffset = 3f;
     public float maxYOffset = 5f;
-    public float xOffset = 20f; 
+    public float xOffset = 20f;
+
+    public float minDropEnemyTime = 2.0f;
+    public float dropEnemyTimeOffset = 1.0f;
+    public int walkEnemyChance = 40;
+
+    public float downSpeed = 1.5f;
+
+    public int sleepStatAdd = 5; 
+
 
     int platformNum = 10;
 
-    public float downSpeed = 1.5f;
+    Queue<GameObject> platforms = new Queue<GameObject>();
+    GameObject highestPlatform = null;
+
+    List<GameObject> allObjects;
 
     float middleX;
 
     int score = 0;
 
     float dropEnemyTime = 3.0f;
-    public float minDropEnemyTime = 2.0f; 
-    public float dropEnemyTimeOffset = 1.0f;
-    public int walkEnemyChance = 40; 
+    
+
+    [HideInInspector] public GameObject player;
+    DreamMinigamePlayerScript playerScript;
 
 
     Camera main;
@@ -229,7 +234,9 @@ public class DreamMinigameGameManager : MonoBehaviour
     {
         AddScore();
         SpeedUp();
-        minDropEnemyTime *= .9f; 
+        minDropEnemyTime *= .9f;
+        Global.getInstance().addSleepStat(sleepStatAdd);
+
     }
 
     
