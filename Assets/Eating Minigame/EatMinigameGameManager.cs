@@ -31,6 +31,8 @@ public class EatMinigameGameManager : MonoBehaviour
         AddScore();
         SpawnEnemy();
         SpawnFood();
+
+        Global.getInstance().foodStat += 5; 
     }
 
 
