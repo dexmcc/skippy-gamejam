@@ -18,16 +18,7 @@ public class HubManager : MonoBehaviour
 
     GameObject buttons;
 
-    public Slider healthBar;
-    //float maxHunger = 10f;
-    //float currentHunger = 0f;
-    public Image hungerFillImage;
 
-    public Slider exploreBar;
-    public Image exploreFillImage;
-
-    int maxExplore = 4;
-    int currentExplore = 0;
 
     //0 will say not explored yet, 1 and 2 show which of two options is chosen
     int[] explorations;
@@ -37,7 +28,6 @@ public class HubManager : MonoBehaviour
     public GameObject[] explorationObjects2 = new GameObject[4];
 
     public VideoPlayer endingCutscene;
-
 
     public Slider sleepBar;
     public Slider hungerBar;
@@ -59,8 +49,9 @@ public class HubManager : MonoBehaviour
 
         exploreManager = exploreScript.GetComponent<ExploreManager>();
 
+        int maxExplore = Global.getInstance().maxExplore; 
         //initialising array of objects
-        explorations = new int[(int) maxExplore];
+        explorations = new int[maxExplore];
         for (int i = 0; i < maxExplore; i++) 
         {
             explorations[i] = 0;
@@ -119,7 +110,7 @@ public class HubManager : MonoBehaviour
 
     public void RenderExplorationObjects()
     {
-        GameObject[] toRender = new GameObject[(int) maxExplore]; 
+        GameObject[] toRender = new GameObject[Global.getInstance().maxExplore]; 
         for (int i = 0; i < 4; i++)
         {
             int objectTracker = explorations[i];
@@ -144,19 +135,11 @@ public class HubManager : MonoBehaviour
 
     }
 
-    public int getExploreCount()
-    {
-        return (int) currentExplore;
-    }
 
-    public void ExploreUpdate()
-    {
-        currentExplore = currentExplore + 1;
-    }
 
     public void SetObject(int choice)
     {
-        explorations[currentExplore] = choice;
+        explorations[Global.getInstance().currentExplore] = choice;
     }
 
     public void StartEnding()

@@ -17,9 +17,13 @@ public class Global : MonoBehaviour
     public float explorationStat = 0;
     public float foodStat = 0;
     public float sleepStat = 0;
-    public string hubScene; 
+    public string hubScene;
 
-    
+
+    public int maxExplore = 4;
+    public int currentExplore = 0;
+
+
 
 
     void Awake()
@@ -49,5 +53,15 @@ public class Global : MonoBehaviour
     public void addSleepStat(int amount)
     {
         sleepStat += amount; 
+    }
+
+    public int getExploreCount()
+    {
+        return currentExplore;
+    }
+
+    public void ExploreUpdate()
+    {
+        currentExplore++;
     }
 }

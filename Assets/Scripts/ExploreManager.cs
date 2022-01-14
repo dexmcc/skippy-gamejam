@@ -6,7 +6,7 @@ using UnityEngine.Video;
 public class ExploreManager : MonoBehaviour
 {
 
-    GameObject hubScript;
+    
     HubManager hubManager;
 
     GameObject explore;
@@ -23,12 +23,16 @@ public class ExploreManager : MonoBehaviour
     int nextExplore;
     bool exploreActive;
 
+    Global global;
+
     public void Start()
     {
         exploreActive = false;
-        hubScript = GameObject.Find("HubManager");
+        GameObject hubScript = GameObject.Find("HubManager");
         hubManager = hubScript.GetComponent<HubManager>();
         hub = GameObject.Find("MainHub");
+
+        global = Global.getInstance();
 
         choices = choiceSet[0];
     }
@@ -37,7 +41,7 @@ public class ExploreManager : MonoBehaviour
     {
         exploreActive = true;
         pauseFlag = false;
-        nextExplore = hubManager.getExploreCount();
+        nextExplore = global.getExploreCount();
         choices = choiceSet[nextExplore];
         hub.SetActive(false);
         explore = GameObject.Find("Exploring");
@@ -54,13 +58,13 @@ public class ExploreManager : MonoBehaviour
         pauseFlag = true;
         exploreActive = false;
 
-        nextExplore = hubManager.getExploreCount();
+        nextExplore = global.getExploreCount();
         hub.SetActive(true);
 
         exploreFilms[nextExplore].SetActive(false);
         explore.SetActive(false);
 
-        hubManager.ExploreUpdate();
+        global.ExploreUpdate();
         choices.SetActive(false);
         hubManager.RenderExplorationObjects();
 
