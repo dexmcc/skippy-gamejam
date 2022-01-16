@@ -21,8 +21,10 @@ public class DreamMinigameGameManager : MonoBehaviour
 
     public float downSpeed = 1.5f;
 
-    public int sleepStatAdd = 5; 
+    public int sleepStatAdd = 5;
 
+    [HideInInspector] public GameObject player;
+    DreamMinigamePlayerScript playerScript;
 
     int platformNum = 10;
 
@@ -36,10 +38,14 @@ public class DreamMinigameGameManager : MonoBehaviour
     int score = 0;
 
     float dropEnemyTime = 3.0f;
+
+    [HideInInspector] public bool paused = false;
+
+    Animation animation; 
     
 
-    [HideInInspector] public GameObject player;
-    DreamMinigamePlayerScript playerScript;
+    
+    
 
 
     Camera main;
@@ -49,17 +55,56 @@ public class DreamMinigameGameManager : MonoBehaviour
         main = Camera.main;
         allObjects = new List<GameObject>();
 
-        middleX = main.ViewportToWorldPoint(new Vector3(.5f, 0, 0)).x; 
+        middleX = main.ViewportToWorldPoint(new Vector3(.5f, 0, 0)).x;
+
+        animation = GetComponent<Animation>();
 
         initializePlatforms();
     }
 
+    void TogglePaused()
+    {
+        paused = !paused; 
+
+        foreach (GameObject ob in allObjects)
+        {
+
+            Rigidbody2D rb;
+            if (ob != null)
+            {
+                ob.TryGetComponent<Rigidbody2D>(out rb);
+
+                if (rb != null)
+                {
+                    rb.simulated = !rb.simulated;
+                }
+            }
+
+        }
+    }
+
     private void FixedUpdate()
     {
-        MoveAllObjects();
-        UpdatePlatforms();
-        CheckDropEnemy();
+        if (!paused)
+        {
+            MoveAllObjects();
+            UpdatePlatforms();
+            CheckDropEnemy();
+        }
     }
+
+    public void GameOver()
+    {
+        TogglePaused();
+        animation.Play();
+    }
+
+    public void GotoHub()
+    {
+        Global.getInstance().gotoHubArea();
+    }
+
+
 
     void initializePlatforms()
     {
@@ -182,6 +227,8 @@ public class DreamMinigameGameManager : MonoBehaviour
         else
         {
             GameObject enemy = Instantiate(dropEnemyPrefab);
+
+            enemy.GetComponent<DreamMinigameDropEnemyScript>().gameManager = this; 
 
             Vector3 newPos = main.ViewportToWorldPoint(new Vector3(Random.value, 1.5f, 0));
             newPos.z = 0; 

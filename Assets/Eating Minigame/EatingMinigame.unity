@@ -278,6 +278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1924872812}
   - component: {fileID: 1924872813}
+  - component: {fileID: 1924872814}
   m_Layer: 0
   m_Name: EatMinigameGameManager
   m_TagString: Untagged
@@ -316,6 +317,23 @@ MonoBehaviour:
   foodPrefab: {fileID: 2218169029354992508, guid: 0d2e0ecb5c057374b9ff3115e066b9c5, type: 3}
   main: {fileID: 0}
   score: 0
+  paused: 0
+--- !u!111 &1924872814
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924872811}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 010a28a0137d986448de65cbfb554f5b, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 010a28a0137d986448de65cbfb554f5b, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &1591820464128897816
 PrefabInstance:
   m_ObjectHideFlags: 0

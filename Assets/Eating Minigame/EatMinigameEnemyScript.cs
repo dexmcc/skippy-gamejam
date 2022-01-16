@@ -25,6 +25,8 @@ public class EatMinigameEnemyScript : MonoBehaviour
     private float curOffsetChangeTime = 1;
 
 
+    [HideInInspector] public bool paused; 
+
 
 
     // Start is called before the first frame update
@@ -45,33 +47,37 @@ public class EatMinigameEnemyScript : MonoBehaviour
     // Meant to be sporadic and "nightmare" like
     private void FixedUpdate()
     {
-        if (!attacking && target != null)
+
+        if (!paused)
         {
-            // Check if the random offsets should be changed, if not, decrement the time.
-            if (curOffsetChangeTime > 0)
+            if (!attacking && target != null)
             {
-                curOffsetChangeTime -= Time.fixedDeltaTime;
+                // Check if the random offsets should be changed, if not, decrement the time.
+                if (curOffsetChangeTime > 0)
+                {
+                    curOffsetChangeTime -= Time.fixedDeltaTime;
+                }
+                else
+                {
+                    randomSpeedOffset = new Vector2(Random.Range(-rangeSpeedOffset, rangeSpeedOffset),
+                        Random.Range(-rangeSpeedOffset, rangeSpeedOffset));
+                    randomTargetOffset = new Vector2(Random.Range(-rangeTargetOffset, rangeTargetOffset),
+                        Random.Range(-rangeTargetOffset, rangeTargetOffset));
+                    curOffsetChangeTime = Random.Range(.5f, 2);
+                }
+
+                Vector2 moveTo = ((target.transform.position + new Vector3(randomTargetOffset.x, randomTargetOffset.y, 0))
+                    - transform.position).normalized;
+
+                rb.MovePosition(rb.position + ((moveTo + randomSpeedOffset) * baseSpeed * Time.fixedDeltaTime));
+
+
+                if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
+                {
+                    AttackStart();
+                }
+
             }
-            else
-            {
-                randomSpeedOffset = new Vector2(Random.Range(-rangeSpeedOffset, rangeSpeedOffset), 
-                    Random.Range(-rangeSpeedOffset, rangeSpeedOffset));
-                randomTargetOffset = new Vector2(Random.Range(-rangeTargetOffset, rangeTargetOffset),
-                    Random.Range(-rangeTargetOffset, rangeTargetOffset));
-                curOffsetChangeTime = Random.Range(.5f, 2);
-            }
-
-            Vector2 moveTo = ((target.transform.position + new Vector3(randomTargetOffset.x, randomTargetOffset.y, 0)) 
-                - transform.position).normalized;
-
-            rb.MovePosition(rb.position + ((moveTo + randomSpeedOffset) * baseSpeed * Time.fixedDeltaTime));
-
-
-            if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
-            {
-                AttackStart();
-            }
-
         }
     }
 
@@ -87,7 +93,7 @@ public class EatMinigameEnemyScript : MonoBehaviour
     // Called in the animation, checks if the player is in range then kills them
     void Attack()
     {
-        if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
+        if (!paused && Vector3.Distance(transform.position, target.transform.position) < attackRange)
         {
             target.Kill();
             target = null;

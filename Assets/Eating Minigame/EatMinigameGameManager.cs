@@ -13,16 +13,23 @@ public class EatMinigameGameManager : MonoBehaviour
 
     public int score;
 
+    [HideInInspector] public bool paused = false;
+    List<GameObject> enemies = new List<GameObject>();
+    Animation animation; 
+
     private void Start()
     {
-        print("starting");
         main = Camera.main;
 
         SpawnFood();
 
+        animation = GetComponent<Animation>();
+
         // Center the player on the screen to start
         player.transform.position = main.ViewportToWorldPoint(new Vector2(.5f, .5f));
         player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, 0);
+
+        player.GetComponent<EatMinigamePlayerScript>().gameManager = this; 
     }
 
 
@@ -41,6 +48,41 @@ public class EatMinigameGameManager : MonoBehaviour
         score++; 
     }
 
+    public void GameOver()
+    {
+        TogglePaused();
+        animation.Play();
+    }
+
+    public void GotoHub()
+    {
+        Global.getInstance().gotoHubArea();
+    }
+
+
+    void TogglePaused()
+    {
+        paused = !paused;
+
+        player.GetComponent<EatMinigamePlayerScript>().paused = paused; 
+
+        foreach (GameObject ob in enemies)
+        {
+            if (ob != null) {
+
+                EatMinigameEnemyScript es;
+                es = ob.GetComponent<EatMinigameEnemyScript>();
+
+                if (es != null)
+                {
+                    es.paused = paused; 
+                }
+            }
+
+        }
+    }
+
+
 
     // Food are spawned like normal objects, then given a gamemanager (this instance of this class)
     public GameObject SpawnFood()
@@ -57,6 +99,8 @@ public class EatMinigameGameManager : MonoBehaviour
         GameObject enemy = SpawnObject(enemyPrefab);
         EatMinigameEnemyScript script = enemy.GetComponent<EatMinigameEnemyScript>();
         script.target = player.GetComponent<EatMinigamePlayerScript>();
+
+        enemies.Add(enemy);
         
 
         return enemy;
