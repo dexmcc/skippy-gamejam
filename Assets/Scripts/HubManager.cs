@@ -3,22 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.Video;
 
 public class HubManager : MonoBehaviour
 {
 
     
-
-    GameObject exploreScript;
-    ExploreManager exploreManager;
-    GameObject explore;
-    GameObject ending;
-    GameObject hub;
-
-    GameObject buttons;
-
-    public VideoPlayer endingCutscene;
 
     public Slider sleepBar;
     public Slider hungerBar;
@@ -26,38 +15,23 @@ public class HubManager : MonoBehaviour
 
     bool endingFlag;
 
+    //holding the gameobjects;
+    public GameObject[] explorationObjects1 = new GameObject[4];
+    public GameObject[] explorationObjects2 = new GameObject[4];
+
+
+
     public void Start()
     {
-        endingFlag = false;
-        hub = GameObject.Find("MainHub");
-        exploreScript = GameObject.Find("ExploreManager");
-        explore = GameObject.Find("Exploring");
-        ending = GameObject.Find("Ending");
-        buttons = GameObject.Find("Buttons");
 
-        explore.SetActive(false);
-        ending.SetActive(false);
-
-        exploreManager = exploreScript.GetComponent<ExploreManager>();
-
-        
+        RenderExplorationObjects();
 
         UpdateSliders();
     }
 
-    public void FixedUpdate()
-    {
 
-        if (endingFlag)
-        {
-            if ((endingCutscene.frame) > 0 && ((endingCutscene.isPlaying == false) || ((long) endingCutscene.frame == (long) (endingCutscene.frameCount - ((long) 1)))))
-            { 
-                endingFlag = false;
-                SceneManager.LoadScene("MainMenu");
-            }
-        }
 
-    }
+    
 
 
     public void UpdateSliders()
@@ -67,6 +41,33 @@ public class HubManager : MonoBehaviour
         explorationBar.value = (Global.getInstance().explorationStat / 100.0f);
     }
 
+    public void RenderExplorationObjects()
+    {
+        GameObject[] toRender = new GameObject[Global.getInstance().maxExplore];
+        for (int i = 0; i < 4; i++)
+        {
+            int objectTracker = Global.getInstance().explorationChoices[i];
+
+            if (objectTracker == 1)
+            {
+                toRender[i] = explorationObjects1[i];
+            }
+            else if (objectTracker == 2)
+            {
+                toRender[i] = explorationObjects2[i];
+            }
+
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (toRender[i] != null)
+            {
+                toRender[i].SetActive(true);
+            }
+        }
+
+    }
 
     public void FeedButton()
     {
@@ -82,21 +83,17 @@ public class HubManager : MonoBehaviour
     public void ExploreButton()
     {
 
-        explore.SetActive(true);
-        exploreManager.StartExplore();
-        
+        // Change this to goto explore area
+        SceneManager.LoadScene("ExploreHub");
+        //explore.SetActive(true);
+        //exploreManager.StartExplore();
+
     }
 
     public void StartEnding()
     {
-        endingFlag = true;
-
-        buttons.SetActive(false);
-        explore.SetActive(false);
-        hub.SetActive(false);
-        ending.SetActive(true);
-
-        endingCutscene.Play();
+        // Go to ending room 
+        SceneManager.LoadScene("Ending");
     }
     
 }
