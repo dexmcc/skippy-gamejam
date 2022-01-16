@@ -560,10 +560,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b57395f1e307e884f9914a46b8f8a3bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 1388523768}
-  hungerFillImage: {fileID: 1367384229}
-  exploreBar: {fileID: 1003392391}
-  exploreFillImage: {fileID: 1168217029}
   explorationObjects1:
   - {fileID: 588961391}
   - {fileID: 1169979654}
@@ -2235,6 +2231,16 @@ MonoBehaviour:
   - {fileID: 93371802}
   - {fileID: 1100107206}
   - {fileID: 1678354972}
+  explorationObjects1:
+  - {fileID: 588961391}
+  - {fileID: 1169979654}
+  - {fileID: 565617609}
+  - {fileID: 69508592}
+  explorationObjects2:
+  - {fileID: 1957455546}
+  - {fileID: 393716352}
+  - {fileID: 1703160216}
+  - {fileID: 1442347601}
 --- !u!224 &854985568 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3620303382810751513, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}

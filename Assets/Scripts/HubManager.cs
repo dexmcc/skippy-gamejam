@@ -18,15 +18,6 @@ public class HubManager : MonoBehaviour
 
     GameObject buttons;
 
-
-
-    //0 will say not explored yet, 1 and 2 show which of two options is chosen
-    int[] explorations;
-
-    //holding the gameobjects;
-    public GameObject[] explorationObjects1 = new GameObject[4];
-    public GameObject[] explorationObjects2 = new GameObject[4];
-
     public VideoPlayer endingCutscene;
 
     public Slider sleepBar;
@@ -49,13 +40,7 @@ public class HubManager : MonoBehaviour
 
         exploreManager = exploreScript.GetComponent<ExploreManager>();
 
-        int maxExplore = Global.getInstance().maxExplore; 
-        //initialising array of objects
-        explorations = new int[maxExplore];
-        for (int i = 0; i < maxExplore; i++) 
-        {
-            explorations[i] = 0;
-        }
+        
 
         UpdateSliders();
     }
@@ -93,12 +78,6 @@ public class HubManager : MonoBehaviour
         SceneManager.LoadScene("DreamMinigame");
     }
 
-    /*public void CleanButton()
-    {
-        SceneManager.LoadScene("CleaningMinigame");
-        //SceneManager.LoadScene("SampleScene");
-        //Debug.Log("clean");
-    }*/
 
     public void ExploreButton()
     {
@@ -106,40 +85,6 @@ public class HubManager : MonoBehaviour
         explore.SetActive(true);
         exploreManager.StartExplore();
         
-    }
-
-    public void RenderExplorationObjects()
-    {
-        GameObject[] toRender = new GameObject[Global.getInstance().maxExplore]; 
-        for (int i = 0; i < 4; i++)
-        {
-            int objectTracker = explorations[i];
-
-            if (objectTracker == 1)
-            {
-                toRender[i] = explorationObjects1[i];
-            } else if (objectTracker == 2)
-            {
-                toRender[i] = explorationObjects2[i];
-            }
-
-        }
-
-        for (int i = 0; i < 4; i++)
-        {
-            if (toRender[i] != null)
-            {
-                toRender[i].SetActive(true);
-            }
-        }
-
-    }
-
-
-
-    public void SetObject(int choice)
-    {
-        explorations[Global.getInstance().currentExplore] = choice;
     }
 
     public void StartEnding()

@@ -25,6 +25,12 @@ public class ExploreManager : MonoBehaviour
 
     Global global;
 
+   
+
+    //holding the gameobjects;
+    public GameObject[] explorationObjects1 = new GameObject[4];
+    public GameObject[] explorationObjects2 = new GameObject[4];
+
     public void Start()
     {
         exploreActive = false;
@@ -35,6 +41,43 @@ public class ExploreManager : MonoBehaviour
         global = Global.getInstance();
 
         choices = choiceSet[0];
+
+        
+    }
+
+
+    public void RenderExplorationObjects()
+    {
+        GameObject[] toRender = new GameObject[Global.getInstance().maxExplore];
+        for (int i = 0; i < 4; i++)
+        {
+            int objectTracker = Global.getInstance().explorationChoices[i];
+
+            if (objectTracker == 1)
+            {
+                toRender[i] = explorationObjects1[i];
+            }
+            else if (objectTracker == 2)
+            {
+                toRender[i] = explorationObjects2[i];
+            }
+
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (toRender[i] != null)
+            {
+                toRender[i].SetActive(true);
+            }
+        }
+
+    }
+
+
+    public void SetChoice(int choice)
+    {
+        Global.getInstance().explorationChoices[Global.getInstance().currentExplore] = choice;
     }
 
     public void StartExplore()
@@ -47,6 +90,7 @@ public class ExploreManager : MonoBehaviour
         explore = GameObject.Find("Exploring");
         exploreFilms[nextExplore].SetActive(true);
         currentVideo = exploreFilms[nextExplore].GetComponent<VideoPlayer>();
+
         for (int i = 0; i < 4; i++)
         {
             choiceSet[i].SetActive(false);
@@ -66,7 +110,7 @@ public class ExploreManager : MonoBehaviour
 
         global.ExploreUpdate();
         choices.SetActive(false);
-        hubManager.RenderExplorationObjects();
+        RenderExplorationObjects();
 
         if (nextExplore == 3)
         {
@@ -98,9 +142,6 @@ public class ExploreManager : MonoBehaviour
         choices.SetActive(true);
     }
 
-    public void SetChoice(int choice)
-    {
-        hubManager.SetObject(choice);
-    }
+    
 
 }

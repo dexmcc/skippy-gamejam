@@ -24,6 +24,9 @@ public class Global : MonoBehaviour
     public int currentExplore = 0;
 
 
+    // 0 will say not explored yet, 1 and 2 show which of two options is chosen
+    public int[] explorationChoices;
+
 
 
     void Awake()
@@ -33,7 +36,10 @@ public class Global : MonoBehaviour
         // Allows us to put a Global object in every room without issues
         if (_instance == null)
         {
-            _instance = this; 
+            _instance = this;
+
+            initExplorationChoices(); 
+
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -42,6 +48,17 @@ public class Global : MonoBehaviour
         }
         
     }
+
+    private void initExplorationChoices()
+    {
+        //initialising array of objects
+        explorationChoices = new int[maxExplore];
+        for (int i = 0; i < maxExplore; i++)
+        {
+            explorationChoices[i] = 0;
+        }
+    }
+    
 
 
     public void gotoHubArea()
