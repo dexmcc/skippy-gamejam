@@ -13,6 +13,7 @@ public class MainMenuVideo : MonoBehaviour
     void Start()
     {
         BackgroundVideo = gameObject.GetComponent<VideoPlayer>();
+        BackgroundVideo.frame = 1;
         BackgroundVideo.Pause();
         
     }
