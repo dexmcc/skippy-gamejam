@@ -14,14 +14,17 @@ public class HubManager : MonoBehaviour
     public Slider explorationBar;
     public EndingSequence ending;
 
-    bool endingFlag;
+    bool endFlag = false;
+    float timer = 0;
+
 
     //holding the gameobjects;
     public GameObject[] explorationObjects1 = new GameObject[4];
     public GameObject[] explorationObjects2 = new GameObject[4];
 
-    GameObject[] toRender;
+    public GameObject mainUI;
 
+    GameObject[] toRender;
 
     public void Start()
     {
@@ -29,11 +32,31 @@ public class HubManager : MonoBehaviour
         RenderExplorationObjects();
 
         UpdateSliders();
+
+        if (Global.getInstance().currentExplore == 4)
+        {
+            endFlag = true;
+            mainUI.SetActive(false);
+        }
+
+
     }
 
 
 
-    
+    public void FixedUpdate()
+    {
+        if (endFlag)
+        {
+            timer = timer + 1f;
+
+            if (timer >= 50f)
+            {
+                StartEnding();
+            }
+            
+        }
+    }
 
 
     public void UpdateSliders()

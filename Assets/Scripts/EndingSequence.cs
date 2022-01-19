@@ -27,6 +27,10 @@ public class EndingSequence : MonoBehaviour
 
     Vector3 directionChange;
 
+    public GameObject skippyText;
+
+    float timer = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,13 +71,23 @@ public class EndingSequence : MonoBehaviour
                 }
             }
 
-            if (endCheck >= 1)
+            if (endCheck >= 4)
             {
                 fadeWhite.color = new Color(fadeWhite.color.r, fadeWhite.color.g, fadeWhite.color.b, fadeWhite.color.a + 0.01f);
                 if (fadeWhite.color.a >= 0.99f)
                 {
                     SceneManager.LoadScene("Ending");
                 }
+            }
+
+            //text popping up and stuff
+            timer = timer + 1f;
+            if (timer == 135f)
+            {
+                skippyText.SetActive(true);
+            } else if (timer == 270f)
+            {
+                skippyText.SetActive(false);
             }
 
         }

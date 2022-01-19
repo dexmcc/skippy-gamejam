@@ -13,6 +13,7 @@ public class ExploreManager : MonoBehaviour
 
 
     bool pauseFlag;
+    bool endFlag;
 
     VideoPlayer currentVideo;
 
@@ -34,7 +35,7 @@ public class ExploreManager : MonoBehaviour
         choices = choiceSet[0];
 
         StartExplore();
-        
+
     }
 
 
@@ -49,6 +50,7 @@ public class ExploreManager : MonoBehaviour
     public void StartExplore()
     {
         pauseFlag = false;
+        endFlag = false;
 
         nextExplore = global.getExploreCount();
         choices = choiceSet[nextExplore];
@@ -85,11 +87,16 @@ public class ExploreManager : MonoBehaviour
             OpenChoices();
         }
         
+        if (endFlag && ((currentVideo.frame) > 0 && ((currentVideo.isPlaying == false) || ((long)currentVideo.frame == (long)(currentVideo.frameCount - ((long)1)))))) {
+            EndExplore();
+        }
+
     }
 
     public void PlayVideo()
     {
         currentVideo.Play();
+        endFlag = true;
     }
 
     public void OpenChoices()
