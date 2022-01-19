@@ -72,15 +72,7 @@ public class ExploreManager : MonoBehaviour
 
         global.ExploreUpdate();
 
-        // If this is the last explored area, go to the ending, otherwise, go to the hub
-        if (nextExplore == 3)
-        {
-            SceneManager.LoadScene("Ending");
-        }
-        else
-        {
-            SceneManager.LoadScene("MainHub");
-        }
+        SceneManager.LoadScene("MainHub");
     }
 
     public void Update()

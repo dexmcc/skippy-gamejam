@@ -12,6 +12,7 @@ public class HubManager : MonoBehaviour
     public Slider sleepBar;
     public Slider hungerBar;
     public Slider explorationBar;
+    public EndingSequence ending;
 
     bool endingFlag;
 
@@ -19,6 +20,7 @@ public class HubManager : MonoBehaviour
     public GameObject[] explorationObjects1 = new GameObject[4];
     public GameObject[] explorationObjects2 = new GameObject[4];
 
+    GameObject[] toRender;
 
 
     public void Start()
@@ -43,7 +45,7 @@ public class HubManager : MonoBehaviour
 
     public void RenderExplorationObjects()
     {
-        GameObject[] toRender = new GameObject[Global.getInstance().maxExplore];
+        toRender = new GameObject[Global.getInstance().maxExplore];
         for (int i = 0; i < 4; i++)
         {
             int objectTracker = Global.getInstance().explorationChoices[i];
@@ -69,6 +71,11 @@ public class HubManager : MonoBehaviour
 
     }
 
+    public GameObject[] GetObjectsForEnd()
+    {
+        return toRender;
+    }
+
     public void FeedButton()
     {
         SceneManager.LoadScene("EatingMinigame");
@@ -92,8 +99,7 @@ public class HubManager : MonoBehaviour
 
     public void StartEnding()
     {
-        // Go to ending room 
-        SceneManager.LoadScene("Ending");
+        ending.StartEndSequence();
     }
     
 }
