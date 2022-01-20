@@ -11,6 +11,7 @@ public class EatMinigamePlayerScript : MonoBehaviour
 
     private Camera main;
     private Rigidbody2D rb;
+    private AudioSource audioSource; 
 
     [HideInInspector] public EatMinigameGameManager gameManager;
     [HideInInspector] public bool paused = false; 
@@ -20,6 +21,7 @@ public class EatMinigamePlayerScript : MonoBehaviour
     {
         main = Camera.main;
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -97,6 +99,7 @@ public class EatMinigamePlayerScript : MonoBehaviour
 
         if (script != null)
         {
+            //audioSource.Play();
             script.GivePointAndDestroy();
         }
     }

@@ -12,7 +12,15 @@ public class EatMinigameEnemyScript : MonoBehaviour
     public float attackRange = 1.2f;
 
     public float rangeSpeedOffset = 1.5f;
-    public float rangeTargetOffset = 1f; 
+    public float rangeTargetOffset = 1f;
+
+    public AudioClip[] growlSounds;
+    public float curGrowlSoundTime = 0;
+    public float defaultGrowlSoundTime = 2.5f;
+    public float growlSoundTimeOffset = 0.5f;
+
+
+    private AudioSource audioSource; 
 
 
     private bool attacking = false;
@@ -34,6 +42,7 @@ public class EatMinigameEnemyScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animation = GetComponent<Animation>();
+        audioSource = GetComponent<AudioSource>();
 
         baseSpeed += Random.Range(-baseSpeedRandomOffset, baseSpeedRandomOffset);
     }
@@ -66,6 +75,17 @@ public class EatMinigameEnemyScript : MonoBehaviour
                     curOffsetChangeTime = Random.Range(.5f, 2);
                 }
 
+
+                if (curGrowlSoundTime > 0)
+                {
+                    curGrowlSoundTime -= Time.fixedDeltaTime; 
+                }
+                else
+                {
+                    PlayGrowl();
+                    curGrowlSoundTime = 10000000; 
+                }
+
                 Vector2 moveTo = ((target.transform.position + new Vector3(randomTargetOffset.x, randomTargetOffset.y, 0))
                     - transform.position).normalized;
 
@@ -81,9 +101,23 @@ public class EatMinigameEnemyScript : MonoBehaviour
         }
     }
 
+
+    void PlayGrowl()
+    {
+        audioSource.clip = growlSounds[Random.Range(0, growlSounds.Length - 1)];
+        audioSource.pitch = Random.Range(.95f, 1.05f);
+
+        audioSource.Play();
+
+        curGrowlSoundTime = defaultGrowlSoundTime + Random.Range(-growlSoundTimeOffset, growlSoundTimeOffset);
+    }
+
+
     // Starts the animation
     void AttackStart()
     {
+
+        PlayGrowl();
         // Play animation
         attacking = true;
         animation.Play();

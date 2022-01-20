@@ -21,7 +21,8 @@ public class DreamMinigameGameManager : MonoBehaviour
 
     public float downSpeed = 1.5f;
 
-    public int sleepStatAdd = 5;
+    public int sleepStatAdd = 6;
+    public int sleepStatAddOffset = 1; 
 
     [HideInInspector] public GameObject player;
     DreamMinigamePlayerScript playerScript;
@@ -39,9 +40,12 @@ public class DreamMinigameGameManager : MonoBehaviour
 
     float dropEnemyTime = 3.0f;
 
+    bool gameOver = false; 
+
     [HideInInspector] public bool paused = false;
 
-    Animation animation; 
+    Animation animation;
+    AudioSource gameOverSound; 
     
 
     
@@ -58,6 +62,7 @@ public class DreamMinigameGameManager : MonoBehaviour
         middleX = main.ViewportToWorldPoint(new Vector3(.5f, 0, 0)).x;
 
         animation = GetComponent<Animation>();
+        gameOverSound = GetComponent<AudioSource>();
 
         initializePlatforms();
     }
@@ -95,8 +100,13 @@ public class DreamMinigameGameManager : MonoBehaviour
 
     public void GameOver()
     {
-        TogglePaused();
-        animation.Play();
+        if (!gameOver)
+        {
+            TogglePaused();
+            gameOverSound.Play();
+            animation.Play();
+            gameOver = true; 
+        }
     }
 
     public void GotoHub()
@@ -282,7 +292,7 @@ public class DreamMinigameGameManager : MonoBehaviour
         AddScore();
         SpeedUp();
         minDropEnemyTime *= .9f;
-        Global.getInstance().addSleepStat(sleepStatAdd);
+        Global.getInstance().addSleepStat(sleepStatAdd + Random.Range(-sleepStatAddOffset, sleepStatAddOffset));
 
     }
 

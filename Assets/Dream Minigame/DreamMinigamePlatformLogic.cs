@@ -5,5 +5,7 @@ using UnityEngine;
 public class DreamMinigamePlatformLogic : MonoBehaviour
 {
     public bool jumpedOn = false;
-    public int posNum; 
+    public int posNum;
+    public AudioSource landSound; 
+
 }

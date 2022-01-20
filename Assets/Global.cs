@@ -69,7 +69,13 @@ public class Global : MonoBehaviour
 
     public void addSleepStat(int amount)
     {
-        sleepStat += amount; 
+        sleepStat = Mathf.Clamp(sleepStat + amount, 0, 100);
+    }
+
+    public void addFoodStat(int amount)
+    {
+
+        foodStat = Mathf.Clamp(foodStat + amount, 0, 100);
     }
 
     public int getExploreCount()

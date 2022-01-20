@@ -1224,6 +1224,8 @@ MonoBehaviour:
   - {fileID: 93371802}
   - {fileID: 1100107206}
   - {fileID: 1678354972}
+  sleepRemove: 32000000000000004b000000
+  hungerRemove: 000000003200000000000000
 --- !u!1001 &971826608
 PrefabInstance:
   m_ObjectHideFlags: 0

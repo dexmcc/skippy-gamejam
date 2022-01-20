@@ -1633,6 +1633,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Global
       objectReference: {fileID: 0}
+    - target: {fileID: 1482528173038579315, guid: c041fee6b651dc54e967705c68fab7f0, type: 3}
+      propertyPath: foodStat
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1482528173038579315, guid: c041fee6b651dc54e967705c68fab7f0, type: 3}
+      propertyPath: sleepStat
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1482528173038579315, guid: c041fee6b651dc54e967705c68fab7f0, type: 3}
+      propertyPath: explorationStat
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1482528173038579324, guid: c041fee6b651dc54e967705c68fab7f0, type: 3}
       propertyPath: m_RootOrder
       value: 3

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,9 +12,20 @@ public class EatMinigameGameManager : MonoBehaviour
 
     public int score;
 
+    public int foodStatAdd = 6;
+    public int foodStatAddOffset = 1;
+
+    public AudioClip gameOverClip;
+
+
+
+
     [HideInInspector] public bool paused = false;
     List<GameObject> enemies = new List<GameObject>();
-    Animation animation; 
+    Animation animation;
+    AudioSource eatSound;
+
+    
 
     private void Start()
     {
@@ -24,6 +34,7 @@ public class EatMinigameGameManager : MonoBehaviour
         SpawnFood();
 
         animation = GetComponent<Animation>();
+        eatSound = GetComponent<AudioSource>();
 
         // Center the player on the screen to start
         player.transform.position = main.ViewportToWorldPoint(new Vector2(.5f, .5f));
@@ -39,7 +50,9 @@ public class EatMinigameGameManager : MonoBehaviour
         SpawnEnemy();
         SpawnFood();
 
-        Global.getInstance().foodStat += 5; 
+        Global.getInstance().addFoodStat(foodStatAdd + Random.Range(-foodStatAddOffset, foodStatAddOffset));
+
+        eatSound.Play();
     }
 
 
@@ -51,6 +64,8 @@ public class EatMinigameGameManager : MonoBehaviour
     public void GameOver()
     {
         TogglePaused();
+        eatSound.clip = gameOverClip;
+        eatSound.Play();
         animation.Play();
     }
 

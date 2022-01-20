@@ -9,7 +9,10 @@ public class DreamMinigamePlayerScript : MonoBehaviour
 {
 
     public DreamMinigameCharacterController controller;
-    public DreamMinigameGameManager gameManager; 
+    public DreamMinigameGameManager gameManager;
+
+
+    private AudioSource jumpSound; 
 
     Camera main; 
     public Rigidbody2D rb;
@@ -23,7 +26,8 @@ public class DreamMinigamePlayerScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        main = Camera.main; 
+        main = Camera.main;
+        jumpSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -49,14 +53,21 @@ public class DreamMinigamePlayerScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
-            jump = true; 
+                
+            jump = true;
         }
 
     }
 
     private void FixedUpdate()
     {
-        controller.Move(moveX * Time.fixedDeltaTime * horizontalSpeed, false, jump);
+        bool jumped = controller.Move(moveX * Time.fixedDeltaTime * horizontalSpeed, false, jump);
+
+        if (jumped)
+        {
+            jumpSound.Play();
+        }
+
         jump = false;
 
         CheckDead();
@@ -86,6 +97,9 @@ public class DreamMinigamePlayerScript : MonoBehaviour
 
             if (script != null)
             {
+
+                script.landSound.Play();
+
                 if (script.jumpedOn == false)
                 {
                     gameManager.OnPlayerJumpedOnPlatform();

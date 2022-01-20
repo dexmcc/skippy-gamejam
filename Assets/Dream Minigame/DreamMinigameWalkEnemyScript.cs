@@ -11,8 +11,14 @@ public class DreamMinigameWalkEnemyScript : MonoBehaviour
 
     Camera main;
     Rigidbody2D rb;
+    AudioSource audioSource; 
 
     Vector3 zeroVel = Vector3.zero;
+
+    public AudioClip[] growlSounds;
+    bool growlPlayed = false; 
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +30,8 @@ public class DreamMinigameWalkEnemyScript : MonoBehaviour
         if (direction == 0) { direction = 1; }
 
         rb = GetComponent<Rigidbody2D>();
+
+        audioSource = GetComponent<AudioSource>();
 
 
     }
@@ -55,6 +63,24 @@ public class DreamMinigameWalkEnemyScript : MonoBehaviour
         {
             Kill();
         }
+
+        if (main.WorldToViewportPoint(transform.position).y < .85 && !growlPlayed)
+        {
+            PlayGrowl();
+        }
+
+    }
+
+    void PlayGrowl()
+    {
+        audioSource.clip = growlSounds[Random.Range(0, growlSounds.Length - 1)];
+        audioSource.pitch = Random.Range(.95f, 1.05f);
+
+        audioSource.Play();
+
+        growlPlayed = true;
+
+        //curGrowlSoundTime = defaultGrowlSoundTime + Random.Range(-growlSoundTimeOffset, growlSoundTimeOffset);
     }
 
     public void Kill()

@@ -10,6 +10,8 @@ public class ExploreManager : MonoBehaviour
     public GameObject[] exploreFilms = new GameObject[4];
     public long[] pauseFrames = new long[4];
     public GameObject[] choiceSet = new GameObject[4];
+    public int[] sleepRemove = new int[3];
+    public int[] hungerRemove = new int[3];
 
 
     bool pauseFlag;
@@ -67,6 +69,10 @@ public class ExploreManager : MonoBehaviour
     public void EndExplore()
     {
         pauseFlag = true;
+
+        Global.getInstance().sleepStat -= sleepRemove[nextExplore];
+        Global.getInstance().foodStat -= hungerRemove[nextExplore];
+
 
         nextExplore = global.getExploreCount();
 
