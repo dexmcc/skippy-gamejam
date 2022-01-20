@@ -381,7 +381,15 @@ PrefabInstance:
     - target: {fileID: 3620303382810751512, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}
       propertyPath: m_VideoClip
       value: 
-      objectReference: {fileID: 32900000, guid: 5da70933d52e1364cad5c108c0484b31, type: 3}
+      objectReference: {fileID: 32900000, guid: ae8d609e249e60b47bdeb016f694efdd, type: 3}
+    - target: {fileID: 3620303382810751512, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}
+      propertyPath: m_AspectRatio
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3620303382810751512, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}
+      propertyPath: m_AudioOutputMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3620303382810751512, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}
       propertyPath: m_ControlledAudioTrackCount
       value: 1
@@ -404,6 +412,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3620303382810751512, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}
       propertyPath: m_DirectAudioVolumes.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3620303382810751512, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}
+      propertyPath: m_EnabledAudioTracks.Array.data[0]
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3620303382810751512, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}

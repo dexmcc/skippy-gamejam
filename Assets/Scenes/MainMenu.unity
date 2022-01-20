@@ -907,8 +907,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -330, y: 177}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -255, y: 87}
+  m_SizeDelta: {x: 269.2355, y: 269.2355}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &733139059
 Animator:
@@ -920,7 +920,7 @@ Animator:
   m_GameObject: {fileID: 733139057}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 049beba63b43ff749a5d019b515737b4, type: 2}
+  m_Controller: {fileID: 9100000, guid: 632f804ebf909dc45a8ddbff6ecaa689, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -949,7 +949,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -6264888010884452779, guid: 9cbdc05b61c52624d8397c8b1cced46c, type: 3}
+  m_Sprite: {fileID: -2906651346136281957, guid: f8d27fa3118a8e94b8b76b2dfef03a4a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1689,10 +1689,14 @@ PrefabInstance:
     - target: {fileID: 3620303382810751512, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}
       propertyPath: m_VideoClip
       value: 
-      objectReference: {fileID: 32900000, guid: 2dfd13306712f3b4d828402e76d86040, type: 3}
+      objectReference: {fileID: 32900000, guid: 6ea302a7f1a28fc44b207734ed0a79e6, type: 3}
     - target: {fileID: 3620303382810751512, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}
       propertyPath: m_SkipOnDrop
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3620303382810751512, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}
+      propertyPath: m_AspectRatio
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3620303382810751512, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}
       propertyPath: m_WaitForFirstFrame
