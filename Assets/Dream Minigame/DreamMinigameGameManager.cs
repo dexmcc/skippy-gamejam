@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DreamMinigameGameManager : MonoBehaviour
 {
@@ -9,7 +10,10 @@ public class DreamMinigameGameManager : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject dropEnemyPrefab;
     public GameObject walkEnemyPrefab;
-    
+
+    public GameObject wakeUp;
+
+    public TextMeshProUGUI sleepTrack;
 
     public float minYOffset = 3f;
     public float maxYOffset = 5f;
@@ -26,6 +30,7 @@ public class DreamMinigameGameManager : MonoBehaviour
 
     [HideInInspector] public GameObject player;
     DreamMinigamePlayerScript playerScript;
+    SpriteRenderer playerSprite;
 
     int platformNum = 10;
 
@@ -47,7 +52,9 @@ public class DreamMinigameGameManager : MonoBehaviour
     public GameObject instructions; 
 
     Animation animation;
-    AudioSource gameOverSound; 
+    AudioSource gameOverSound;
+
+    bool wakeFlag;
     
 
     
@@ -65,6 +72,8 @@ public class DreamMinigameGameManager : MonoBehaviour
 
         animation = GetComponent<Animation>();
         gameOverSound = GetComponent<AudioSource>();
+
+        wakeFlag = false;
 
         initializePlatforms();
     }
@@ -108,6 +117,12 @@ public class DreamMinigameGameManager : MonoBehaviour
                 Destroy(instructions);
             }
         }
+
+        if (wakeFlag)
+        {
+            Color playerColor = playerSprite.color;
+            playerSprite.color = new Color(playerColor.r, playerColor.g, playerColor.b, playerColor.a - 0.01f);
+        }
     }
 
     public void GameOver()
@@ -115,9 +130,11 @@ public class DreamMinigameGameManager : MonoBehaviour
         if (!gameOver)
         {
             TogglePaused();
+            wakeUp.SetActive(true);
             gameOverSound.Play();
             animation.Play();
-            gameOver = true; 
+            gameOver = true;
+            wakeFlag = true;
         }
     }
 
@@ -152,7 +169,7 @@ public class DreamMinigameGameManager : MonoBehaviour
         playerScript.gameManager = this; 
 
         player.transform.Translate(new Vector3(0, 2, 0));
-
+        playerSprite = player.GetComponent<SpriteRenderer>();
         
     }
 
@@ -305,6 +322,7 @@ public class DreamMinigameGameManager : MonoBehaviour
         SpeedUp();
         minDropEnemyTime *= .9f;
         Global.getInstance().addSleepStat(sleepStatAdd + Random.Range(-sleepStatAddOffset, sleepStatAddOffset));
+        sleepTrack.text = Global.getInstance().sleepStat.ToString("F0") + "%";
 
     }
 
