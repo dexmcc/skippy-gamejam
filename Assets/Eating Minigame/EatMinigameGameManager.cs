@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EatMinigameGameManager : MonoBehaviour
 {
@@ -8,7 +9,9 @@ public class EatMinigameGameManager : MonoBehaviour
     public GameObject player;
     public GameObject foodPrefab;
 
-    public Camera main; 
+    public Camera main;
+
+    public TextMeshProUGUI hungerTrack;
 
     public int score;
 
@@ -60,6 +63,7 @@ public class EatMinigameGameManager : MonoBehaviour
 
         player.GetComponent<EatMinigamePlayerScript>().gameManager = this;
 
+        hungerTrack.text = Global.getInstance().foodStat.ToString("F0") + "%";
 
         // Start paused initially for instructions
         TogglePaused();
@@ -73,6 +77,7 @@ public class EatMinigameGameManager : MonoBehaviour
         SpawnFood();
 
         Global.getInstance().addFoodStat(foodStatAdd + Random.Range(-foodStatAddOffset, foodStatAddOffset));
+        hungerTrack.text = Global.getInstance().foodStat.ToString("F0") + "%";
 
         eatSound.Play();
     }

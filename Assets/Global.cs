@@ -14,9 +14,9 @@ public class Global : MonoBehaviour
 
     // Game related variables
 
-    public float explorationStat;
-    public float foodStat;
-    public float sleepStat;
+    public float explorationStat = 0f;
+    public float foodStat = 53f;
+    public float sleepStat = 85f;
     public string hubScene;
 
 
