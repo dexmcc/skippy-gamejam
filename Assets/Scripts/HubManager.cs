@@ -14,6 +14,10 @@ public class HubManager : MonoBehaviour
     public TextMeshProUGUI hungerTrack;
     public TextMeshProUGUI explorationTrack;
 
+    TextMeshProUGUI sleepSprite;
+    TextMeshProUGUI hungerSprite;
+
+
     bool endFlag = false;
     float timer = 0;
 
@@ -31,6 +35,9 @@ public class HubManager : MonoBehaviour
 
     public void Start()
     {
+        sleepSprite = sleepTrack.GetComponent<TextMeshProUGUI>();
+        hungerSprite = hungerTrack.GetComponent<TextMeshProUGUI>();
+
 
         RenderExplorationObjects();
 
@@ -41,6 +48,8 @@ public class HubManager : MonoBehaviour
             endFlag = true;
             mainUI.SetActive(false);
         }
+
+        
 
 
     }
@@ -64,6 +73,11 @@ public class HubManager : MonoBehaviour
 
     public void UpdateSliders()
     {
+        if (Global.getInstance().sleepStat < 80)
+        {
+            sleepSprite.color = new Color(91 / 255, 226 / 255, 106 / 255, 203 / 255);
+        }
+
         sleepTrack.text = Global.getInstance().sleepStat.ToString("F0") + "%";
         hungerTrack.text = Global.getInstance().foodStat.ToString("F0") + "%";
         explorationTrack.text = Global.getInstance().explorationStat.ToString("F0") + "%";
@@ -121,7 +135,7 @@ public class HubManager : MonoBehaviour
             exploreDeny.SetActive(true);
         } else
         {
-            SceneManager.LoadScene("ExploreHub");
+            SceneManager.LoadScene("ExploreHub");   
         }
 
 
