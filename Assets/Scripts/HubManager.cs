@@ -17,6 +17,9 @@ public class HubManager : MonoBehaviour
     bool endFlag = false;
     float timer = 0;
 
+    public GameObject exploreDeny;
+    public GameObject exploreConfirm;
+
 
     //holding the gameobjects;
     public GameObject[] explorationObjects1 = new GameObject[4];
@@ -112,7 +115,16 @@ public class HubManager : MonoBehaviour
 
     public void ExploreButton()
     {
-        SceneManager.LoadScene("ExploreHub");
+        if ((Global.getInstance().sleepStat < 80) || (Global.getInstance().foodStat < 80))
+        {
+            exploreConfirm.SetActive(false);
+            exploreDeny.SetActive(true);
+        } else
+        {
+            SceneManager.LoadScene("ExploreHub");
+        }
+
+
 
     }
 

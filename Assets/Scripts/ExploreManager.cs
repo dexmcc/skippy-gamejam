@@ -14,6 +14,7 @@ public class ExploreManager : MonoBehaviour
     public int[] hungerRemove = new int[3];
 
 
+
     bool pauseFlag;
     bool endFlag;
 
