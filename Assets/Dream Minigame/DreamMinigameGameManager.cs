@@ -252,7 +252,7 @@ public class DreamMinigameGameManager : MonoBehaviour
 
             enemy.GetComponent<DreamMinigameDropEnemyScript>().gameManager = this; 
 
-            Vector3 newPos = main.ViewportToWorldPoint(new Vector3(Random.value, 1.5f, 0));
+            Vector3 newPos = main.ViewportToWorldPoint(new Vector3(Random.value, 1.2f, 0));
             newPos.z = 0; 
             enemy.transform.position = newPos;
 

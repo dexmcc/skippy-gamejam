@@ -7,13 +7,21 @@ public class DreamMinigameDropEnemyScript : MonoBehaviour
     public float dropSpeed = 1.0f;
     public DreamMinigameGameManager gameManager;
 
-    Camera main; 
+    Camera main;
+
+    bool soundPlayed = false;
+
+    AudioSource audioSource; 
 
     private void Start()
     {
         main = Camera.main;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
+
+    
 
     private void FixedUpdate()
     {
@@ -21,11 +29,30 @@ public class DreamMinigameDropEnemyScript : MonoBehaviour
         {
             transform.Translate(new Vector3(0, -dropSpeed * Time.fixedDeltaTime, 0));
 
-            if (main.WorldToViewportPoint(transform.position).y < -.3f)
+            float viewY = main.WorldToViewportPoint(transform.position).y;
+
+            if (viewY < -.3f)
             {
                 Kill();
             }
+
+            if (viewY < 1.02f && !soundPlayed)
+            {
+                PlaySound();
+            }
         }
+    }
+
+    void PlaySound()
+    {
+
+        audioSource.pitch = Random.Range(.5f, 1.5f);
+
+        audioSource.Play();
+
+        soundPlayed = true;
+
+        //curGrowlSoundTime = defaultGrowlSoundTime + Random.Range(-growlSoundTimeOffset, growlSoundTimeOffset);
     }
 
     public void Kill()
