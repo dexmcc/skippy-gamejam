@@ -89,11 +89,12 @@ public class EatMinigameEnemyScript : MonoBehaviour
                 Vector2 moveTo = ((target.transform.position + new Vector3(randomTargetOffset.x, randomTargetOffset.y, 0))
                     - transform.position).normalized;
 
-                moveTo += randomSpeedOffset;
 
-                //transform.forward = moveTo; 
+                float angle = Vector2.SignedAngle(Vector2.right, moveTo);
 
-                rb.MovePosition(rb.position + ((moveTo) * baseSpeed * Time.fixedDeltaTime));
+                transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+
+                rb.MovePosition(rb.position + ((moveTo + randomSpeedOffset) * (baseSpeed) * Time.fixedDeltaTime));
 
 
                 if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
@@ -109,7 +110,7 @@ public class EatMinigameEnemyScript : MonoBehaviour
     void PlayGrowl()
     {
         audioSource.clip = growlSounds[Random.Range(0, growlSounds.Length - 1)];
-        audioSource.pitch = Random.Range(.95f, 1.05f);
+        audioSource.pitch = Random.Range(.85f, 1.15f);
 
         audioSource.Play();
 

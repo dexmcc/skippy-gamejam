@@ -43,6 +43,8 @@ public class DreamMinigameGameManager : MonoBehaviour
     bool gameOver = false; 
 
     [HideInInspector] public bool paused = false;
+    public bool initPause = true;
+    public GameObject instructions; 
 
     Animation animation;
     AudioSource gameOverSound; 
@@ -90,11 +92,21 @@ public class DreamMinigameGameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!paused)
+        if (!paused && !initPause)
         {
             MoveAllObjects();
             UpdatePlatforms();
             CheckDropEnemy();
+        }
+
+        if (initPause)
+        {
+
+            if (Input.anyKey)
+            {
+                initPause = false;
+                Destroy(instructions);
+            }
         }
     }
 

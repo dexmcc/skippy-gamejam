@@ -26,6 +26,24 @@ public class EatMinigameGameManager : MonoBehaviour
     AudioSource eatSound;
 
     
+    public bool initPaused = true;
+    public GameObject instructions;
+
+
+    private void Update()
+    {
+        if (initPaused)
+        {
+            if (Input.anyKey)
+            {
+                //Unpause, it will be paused initially
+                TogglePaused();
+                initPaused = false;
+                Destroy(instructions);
+            }
+        }
+    }
+
 
     private void Start()
     {
@@ -40,7 +58,11 @@ public class EatMinigameGameManager : MonoBehaviour
         player.transform.position = main.ViewportToWorldPoint(new Vector2(.5f, .5f));
         player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, 0);
 
-        player.GetComponent<EatMinigamePlayerScript>().gameManager = this; 
+        player.GetComponent<EatMinigamePlayerScript>().gameManager = this;
+
+
+        // Start paused initially for instructions
+        TogglePaused();
     }
 
 

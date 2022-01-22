@@ -65,22 +65,32 @@ public class EatMinigamePlayerScript : MonoBehaviour
         if (!paused)
         {
 
-            move = move.normalized;
+            if (move != Vector2.zero)
+            {
+                move = move.normalized;
 
-            //transform.forward = move; 
+                float angle = Vector2.SignedAngle(Vector2.right, move);
 
-            Vector2 newPos = rb.position + (move * speed * Time.fixedDeltaTime);
+                transform.rotation = Quaternion.Euler(0, 0, angle - 90);
 
-            // Check if the new position is within the bounds of the camera
-            Vector3 viewPoint = main.WorldToViewportPoint(newPos);
 
-            // Clamp the position in the camera
-            viewPoint.x = Mathf.Clamp(viewPoint.x, 0, 1);
-            viewPoint.y = Mathf.Clamp(viewPoint.y, 0, 1);
+                //transform.forward = move; 
 
-            newPos = main.ViewportToWorldPoint(viewPoint);
+                Vector2 newPos = rb.position + (move * speed * Time.fixedDeltaTime);
 
-            rb.MovePosition(newPos);
+                // Check if the new position is within the bounds of the camera
+                Vector3 viewPoint = main.WorldToViewportPoint(newPos);
+
+                // Clamp the position in the camera
+                viewPoint.x = Mathf.Clamp(viewPoint.x, 0, 1);
+                viewPoint.y = Mathf.Clamp(viewPoint.y, 0, 1);
+
+                newPos = main.ViewportToWorldPoint(viewPoint);
+
+                rb.MovePosition(newPos);
+            }
+
+            
         }
     }
 

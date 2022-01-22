@@ -40,19 +40,23 @@ public class DreamMinigamePlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             moveX = -1;
-            spriteRenderer.flipX = true; 
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * -1, transform.localScale.y, transform.localScale.z); 
+            
         }
         else if (Input.GetKey(KeyCode.D))
         {
             moveX = 1;
-            spriteRenderer.flipX = false;
+
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+
         }
         else
         {
             moveX = 0; 
         }
 
-        
+
+        print(spriteRenderer.flipX);
 
 
         if (Input.GetKey(KeyCode.Space))
