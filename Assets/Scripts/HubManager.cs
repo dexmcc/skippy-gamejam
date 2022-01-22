@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class HubManager : MonoBehaviour
 {
 
-    
-
-    public Slider sleepBar;
-    public Slider hungerBar;
-    public Slider explorationBar;
     public EndingSequence ending;
+
+    public TextMeshProUGUI sleepTrack;
+    public TextMeshProUGUI hungerTrack;
+    public TextMeshProUGUI explorationTrack;
 
     bool endFlag = false;
     float timer = 0;
@@ -61,9 +61,9 @@ public class HubManager : MonoBehaviour
 
     public void UpdateSliders()
     {
-        sleepBar.value = (Global.getInstance().sleepStat / 100.0f);
-        hungerBar.value = (Global.getInstance().foodStat / 100.0f);
-        explorationBar.value = (Global.getInstance().explorationStat / 100.0f);
+        sleepTrack.text = Global.getInstance().sleepStat.ToString("F0") + "%";
+        hungerTrack.text = Global.getInstance().foodStat.ToString("F0") + "%";
+        explorationTrack.text = Global.getInstance().explorationStat.ToString("F0") + "%";
     }
 
     public void RenderExplorationObjects()
@@ -112,11 +112,7 @@ public class HubManager : MonoBehaviour
 
     public void ExploreButton()
     {
-
-        // Change this to goto explore area
         SceneManager.LoadScene("ExploreHub");
-        //explore.SetActive(true);
-        //exploreManager.StartExplore();
 
     }
 
