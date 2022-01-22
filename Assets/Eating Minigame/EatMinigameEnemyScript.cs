@@ -89,7 +89,11 @@ public class EatMinigameEnemyScript : MonoBehaviour
                 Vector2 moveTo = ((target.transform.position + new Vector3(randomTargetOffset.x, randomTargetOffset.y, 0))
                     - transform.position).normalized;
 
-                rb.MovePosition(rb.position + ((moveTo + randomSpeedOffset) * baseSpeed * Time.fixedDeltaTime));
+                moveTo += randomSpeedOffset;
+
+                //transform.forward = moveTo; 
+
+                rb.MovePosition(rb.position + ((moveTo) * baseSpeed * Time.fixedDeltaTime));
 
 
                 if (Vector3.Distance(transform.position, target.transform.position) < attackRange)

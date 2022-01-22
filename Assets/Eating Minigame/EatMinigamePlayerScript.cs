@@ -64,6 +64,11 @@ public class EatMinigamePlayerScript : MonoBehaviour
 
         if (!paused)
         {
+
+            move = move.normalized;
+
+            //transform.forward = move; 
+
             Vector2 newPos = rb.position + (move * speed * Time.fixedDeltaTime);
 
             // Check if the new position is within the bounds of the camera

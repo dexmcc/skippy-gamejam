@@ -16,6 +16,7 @@ public class DreamMinigamePlayerScript : MonoBehaviour
 
     Camera main; 
     public Rigidbody2D rb;
+    SpriteRenderer spriteRenderer; 
 
     public float horizontalSpeed = 30f;
     int moveX = 0;
@@ -28,6 +29,7 @@ public class DreamMinigamePlayerScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         main = Camera.main;
         jumpSound = GetComponent<AudioSource>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -37,11 +39,13 @@ public class DreamMinigamePlayerScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
         {
-            moveX = -1; 
+            moveX = -1;
+            spriteRenderer.flipX = true; 
         }
         else if (Input.GetKey(KeyCode.D))
         {
             moveX = 1;
+            spriteRenderer.flipX = false;
         }
         else
         {
