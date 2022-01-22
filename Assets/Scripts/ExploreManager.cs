@@ -70,10 +70,14 @@ public class ExploreManager : MonoBehaviour
     {
         pauseFlag = true;
 
-        Global.getInstance().sleepStat -= sleepRemove[nextExplore];
-        Global.getInstance().foodStat -= hungerRemove[nextExplore];
+        if (nextExplore < 2)
+        {
+            Global.getInstance().sleepStat -= sleepRemove[nextExplore];
+            Global.getInstance().foodStat -= hungerRemove[nextExplore];
+        }
 
 
+        
         nextExplore = global.getExploreCount();
 
         exploreFilms[nextExplore].SetActive(false);

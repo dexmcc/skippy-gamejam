@@ -14,9 +14,9 @@ public class Global : MonoBehaviour
 
     // Game related variables
 
-    public float explorationStat = 0;
-    public float foodStat = 0;
-    public float sleepStat = 0;
+    public float explorationStat = 0f;
+    public float foodStat = 53f;
+    public float sleepStat = 100f;
     public string hubScene;
 
 
@@ -86,5 +86,6 @@ public class Global : MonoBehaviour
     public void ExploreUpdate()
     {
         currentExplore++;
+        explorationStat = Mathf.Clamp(explorationStat + 25, 0, 100);
     }
 }
