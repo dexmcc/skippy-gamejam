@@ -73,9 +73,24 @@ public class HubManager : MonoBehaviour
 
     public void UpdateSliders()
     {
-        if (Global.getInstance().sleepStat < 80)
+
+        float energyAlpha = Mathf.Clamp((Global.getInstance().sleepStat / 100), 0.5f, 1f);
+        if (Global.getInstance().sleepStat >= 80)
         {
-            sleepSprite.color = new Color(91 / 255, 226 / 255, 106 / 255, 203 / 255);
+            sleepSprite.color = new Color(0.356f , 0.886f, 0.415f, energyAlpha);
+        } else
+        {
+            sleepSprite.color = new Color(0.529f, 0.141f, 0.141f, energyAlpha);
+        }
+
+        float foodAlpha = Mathf.Clamp((Global.getInstance().foodStat / 100), 0.5f, 1f);
+        if (Global.getInstance().foodStat >= 80)
+        {
+            hungerSprite.color = new Color(0.356f, 0.886f, 0.415f, foodAlpha);
+        }
+        else
+        {
+            hungerSprite.color = new Color(0.529f, 0.141f, 0.141f, foodAlpha);
         }
 
         sleepTrack.text = Global.getInstance().sleepStat.ToString("F0") + "%";
