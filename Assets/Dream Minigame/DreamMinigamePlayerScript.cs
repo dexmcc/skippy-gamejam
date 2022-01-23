@@ -30,6 +30,8 @@ public class DreamMinigamePlayerScript : MonoBehaviour
         main = Camera.main;
         jumpSound = GetComponent<AudioSource>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        jumpSound.volume = 0.2f;
     }
 
     // Update is called once per frame

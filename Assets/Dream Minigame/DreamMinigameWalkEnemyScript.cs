@@ -75,6 +75,7 @@ public class DreamMinigameWalkEnemyScript : MonoBehaviour
     {
         audioSource.clip = growlSounds[Random.Range(0, growlSounds.Length - 1)];
         audioSource.pitch = Random.Range(.85f, 1.15f);
+        audioSource.volume = 0.25f;
 
         audioSource.Play();
 

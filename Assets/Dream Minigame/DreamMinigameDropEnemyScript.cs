@@ -18,6 +18,7 @@ public class DreamMinigameDropEnemyScript : MonoBehaviour
         main = Camera.main;
 
         audioSource = GetComponent<AudioSource>();
+        audioSource.volume = 0.3f;
     }
 
 

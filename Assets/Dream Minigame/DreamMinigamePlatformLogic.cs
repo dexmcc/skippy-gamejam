@@ -8,4 +8,9 @@ public class DreamMinigamePlatformLogic : MonoBehaviour
     public int posNum;
     public AudioSource landSound; 
 
+    void Start()
+    {
+        landSound.volume = 0.2f;
+    }
+
 }
