@@ -93,11 +93,16 @@ public class EndingSequence : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    public void ColTrigger(Collider2D col)
     {
         col.gameObject.SetActive(false);
 
         endCheck = endCheck + 1;
+    }
+
+    public bool IsEnding()
+    {
+        return endFlag;
     }
 
     public void GetActiveObjects()

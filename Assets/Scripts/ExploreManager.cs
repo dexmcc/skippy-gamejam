@@ -71,7 +71,7 @@ public class ExploreManager : MonoBehaviour
     {
         pauseFlag = true;
 
-        if (nextExplore < 2)
+        if (nextExplore < 3)
         {
             Global.getInstance().sleepStat -= sleepRemove[nextExplore];
             Global.getInstance().foodStat -= hungerRemove[nextExplore];
