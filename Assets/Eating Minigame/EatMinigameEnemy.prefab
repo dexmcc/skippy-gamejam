@@ -209,8 +209,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  baseSpeed: 3
-  baseSpeedRandomOffset: 1
+  baseSpeed: 2.4
+  baseSpeedRandomOffset: 0.7
   attackRange: 1.2
   rangeSpeedOffset: 1.5
   rangeTargetOffset: 1

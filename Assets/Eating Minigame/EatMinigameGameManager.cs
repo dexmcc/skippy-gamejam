@@ -73,7 +73,7 @@ public class EatMinigameGameManager : MonoBehaviour
 
         player.GetComponent<EatMinigamePlayerScript>().gameManager = this;
 
-        hungerTrack.text = Global.getInstance().foodStat.ToString("F0") + "%";
+        hungerTrack.text = score.ToString("F0");
 
         // Start paused initially for instructions
         TogglePaused();
@@ -87,7 +87,7 @@ public class EatMinigameGameManager : MonoBehaviour
         SpawnFood();
 
         Global.getInstance().addFoodStat(foodStatAdd + Random.Range(-foodStatAddOffset, foodStatAddOffset));
-        hungerTrack.text = Global.getInstance().foodStat.ToString("F0") + "%";
+        hungerTrack.text = score.ToString("F0");
 
         eatSound.Play();
     }

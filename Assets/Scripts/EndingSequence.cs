@@ -14,6 +14,7 @@ public class EndingSequence : MonoBehaviour
     SpriteRenderer[] endingSprites;
 
     public GameObject skippy;
+    public GameObject skippyWhite;
 
     Transform skippyTransform;
     SpriteRenderer skippySprite;
@@ -31,10 +32,14 @@ public class EndingSequence : MonoBehaviour
 
     float timer = 0;
 
+    float endTimer = 0;
+    bool endTimerStart;
+
     // Start is called before the first frame update
     void Start()
     {
         endFlag = false;
+        endTimerStart = false;
 
         colorCheck = false;
 
@@ -49,13 +54,23 @@ public class EndingSequence : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (endTimerStart)
+        {
+            endTimer = endTimer + 1f;
+
+            if (endTimer >= 50f)
+            { 
+                endFlag = true;
+            }
+        }
+
     }
 
     void FixedUpdate()
     {
         if (endFlag)
         {
+
             //objects glowing
             ObjectGlow();
 
@@ -93,11 +108,21 @@ public class EndingSequence : MonoBehaviour
         }
     }
 
+
+    public void addCheck()
+    {
+        endCheck ++;
+    }
+
     public void ColTrigger(Collider2D col)
     {
-        col.gameObject.SetActive(false);
+        if (endFlag)
+        {
+            col.gameObject.SetActive(false);
 
-        endCheck = endCheck + 1;
+            endCheck = endCheck + 1;
+        }
+
     }
 
     public bool IsEnding()
@@ -124,9 +149,11 @@ public class EndingSequence : MonoBehaviour
 
     public void StartEndSequence()
     {
+        skippy.GetComponent<SpriteRenderer>().enabled = true;
+        skippyWhite.SetActive(true);
         fader.SetActive(true);
         GetActiveObjects();
-        endFlag = true;
+        endTimerStart = true;
     }
 
     public void ObjectGlow()

@@ -744,7 +744,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Hunger:'
+  m_text: 'score:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b2c3936fadce6de41b06edd4293a1478, type: 2}
   m_sharedMaterial: {fileID: -2478096408166477495, guid: b2c3936fadce6de41b06edd4293a1478, type: 2}
@@ -1168,7 +1168,7 @@ MonoBehaviour:
   hungerTrack: {fileID: 853510887}
   score: 0
   foodStatAdd: 8
-  foodStatAddOffset: 1
+  foodStatAddOffset: 3
   paused: 0
   initPaused: 1
   instructions: {fileID: 2010918190}

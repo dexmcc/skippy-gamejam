@@ -387,6 +387,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3620303382810751512, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}
+      propertyPath: m_PlaybackSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3620303382810751512, guid: 466a5d91c57382f44bea7e40d4afd8d5, type: 3}
       propertyPath: m_AudioOutputMode
       value: 2
       objectReference: {fileID: 0}

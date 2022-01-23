@@ -70,7 +70,7 @@ public class EatMinigameEnemyScript : MonoBehaviour
                 // Check if the random offsets should be changed, if not, decrement the time.
                 if (curOffsetChangeTime > 0)
                 {
-                    curOffsetChangeTime -= Time.fixedDeltaTime;
+                    curOffsetChangeTime -= (Time.fixedDeltaTime);
                 }
                 else
                 {
@@ -92,15 +92,21 @@ public class EatMinigameEnemyScript : MonoBehaviour
                     curGrowlSoundTime = 10000000; 
                 }
 
-                Vector2 moveTo = ((target.transform.position + new Vector3(randomTargetOffset.x, randomTargetOffset.y, 0))
-                    - transform.position).normalized;
 
+                Vector2 moveTo = ((target.transform.position + new Vector3(randomTargetOffset.x, randomTargetOffset.y, 0)) - transform.position).normalized;
 
                 float angle = Vector2.SignedAngle(Vector2.right, moveTo);
 
                 transform.rotation = Quaternion.Euler(0, 0, angle - 90);
 
-                rb.MovePosition(rb.position + ((moveTo + randomSpeedOffset) * (baseSpeed) * Time.fixedDeltaTime));
+                if ((Vector3.Distance(transform.position, target.transform.position) > 1f))
+                {
+
+
+                    rb.MovePosition(rb.position + ((moveTo + randomSpeedOffset) * (baseSpeed) * Time.fixedDeltaTime));
+                }
+
+
 
                 if ((Vector3.Distance(transform.position, target.transform.position) < attackRange && !attacking) && (startTimer >= 100f))
                 {

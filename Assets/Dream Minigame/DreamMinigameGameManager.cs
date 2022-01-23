@@ -322,7 +322,7 @@ public class DreamMinigameGameManager : MonoBehaviour
         SpeedUp();
         minDropEnemyTime *= .9f;
         Global.getInstance().addSleepStat(sleepStatAdd + Random.Range(-sleepStatAddOffset, sleepStatAddOffset));
-        sleepTrack.text = Global.getInstance().sleepStat.ToString("F0") + "%";
+        sleepTrack.text = score.ToString("F0");
 
     }
 

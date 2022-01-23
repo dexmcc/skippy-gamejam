@@ -33,6 +33,8 @@ public class HubManager : MonoBehaviour
 
     GameObject[] toRender;
 
+    bool endingPause = false;
+
     public void Start()
     {
         sleepSprite = sleepTrack.GetComponent<TextMeshProUGUI>();
@@ -47,10 +49,13 @@ public class HubManager : MonoBehaviour
         {
             endFlag = true;
             mainUI.SetActive(false);
+            endingPause = true;
         }
 
-        
-
+        if (endFlag)
+        {
+            StartEnding();
+        }
 
     }
 
@@ -60,42 +65,39 @@ public class HubManager : MonoBehaviour
     {
         if (endFlag)
         {
-            timer = timer + 1f;
-
-            if (timer >= 50f)
-            {
-                StartEnding();
-            }
-            
+            StartEnding();
         }
     }
 
 
     public void UpdateSliders()
     {
+        if (!endingPause)
+        {
+            float energyAlpha = Mathf.Clamp((Global.getInstance().sleepStat / 100), 0.5f, 1f);
+            if (Global.getInstance().sleepStat >= 80)
+            {
+                sleepSprite.color = new Color(0.356f, 0.886f, 0.415f, energyAlpha);
+            }
+            else
+            {
+                sleepSprite.color = new Color(0.529f, 0.141f, 0.141f, energyAlpha);
+            }
 
-        float energyAlpha = Mathf.Clamp((Global.getInstance().sleepStat / 100), 0.5f, 1f);
-        if (Global.getInstance().sleepStat >= 80)
-        {
-            sleepSprite.color = new Color(0.356f , 0.886f, 0.415f, energyAlpha);
-        } else
-        {
-            sleepSprite.color = new Color(0.529f, 0.141f, 0.141f, energyAlpha);
-        }
+            float foodAlpha = Mathf.Clamp((Global.getInstance().foodStat / 100), 0.5f, 1f);
+            if (Global.getInstance().foodStat >= 80)
+            {
+                hungerSprite.color = new Color(0.356f, 0.886f, 0.415f, foodAlpha);
+            }
+            else
+            {
+                hungerSprite.color = new Color(0.529f, 0.141f, 0.141f, foodAlpha);
+            }
 
-        float foodAlpha = Mathf.Clamp((Global.getInstance().foodStat / 100), 0.5f, 1f);
-        if (Global.getInstance().foodStat >= 80)
-        {
-            hungerSprite.color = new Color(0.356f, 0.886f, 0.415f, foodAlpha);
+            sleepTrack.text = Global.getInstance().sleepStat.ToString("F0") + "%";
+            hungerTrack.text = Global.getInstance().foodStat.ToString("F0") + "%";
+            explorationTrack.text = Global.getInstance().explorationStat.ToString("F0") + "%";
         }
-        else
-        {
-            hungerSprite.color = new Color(0.529f, 0.141f, 0.141f, foodAlpha);
-        }
-
-        sleepTrack.text = Global.getInstance().sleepStat.ToString("F0") + "%";
-        hungerTrack.text = Global.getInstance().foodStat.ToString("F0") + "%";
-        explorationTrack.text = Global.getInstance().explorationStat.ToString("F0") + "%";
     }
 
     public void RenderExplorationObjects()
@@ -144,17 +146,25 @@ public class HubManager : MonoBehaviour
 
     public void ExploreButton()
     {
-        if ((Global.getInstance().sleepStat < 80) || (Global.getInstance().foodStat < 80))
+        if (!endingPause)
         {
-            exploreConfirm.SetActive(false);
-            exploreDeny.SetActive(true);
-        } else
-        {
-            SceneManager.LoadScene("ExploreHub");   
+            if ((Global.getInstance().sleepStat < 80) || (Global.getInstance().foodStat < 80))
+            {
+                exploreConfirm.SetActive(false);
+                exploreDeny.SetActive(true);
+            }
+            else
+            {
+                SceneManager.LoadScene("ExploreHub");
+            }
+
         }
 
+    }
 
-
+    public bool IsEnding()
+    {
+        return endingPause;
     }
 
     public void StartEnding()

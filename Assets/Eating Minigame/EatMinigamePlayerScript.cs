@@ -24,10 +24,12 @@ public class EatMinigamePlayerScript : MonoBehaviour
     Vector2 lastPos;
 
     public AudioSource gameOverClip;
+    bool soundPlayed;
 
     // Start is called before the first frame update
     void Start()
     {
+        soundPlayed = false;
         killFlag = false;
         flashedFlag = false;
         main = Camera.main;
@@ -176,7 +178,12 @@ public class EatMinigamePlayerScript : MonoBehaviour
         // Hardcoded to detect enemy layer b/c wasn't working before
         if (ob.layer == 7)
         {
-            gameOverClip.Play();
+            if (!soundPlayed)
+            {
+                gameOverClip.Play();
+                soundPlayed = true;
+            }
+            
             Kill();
         }
     }
