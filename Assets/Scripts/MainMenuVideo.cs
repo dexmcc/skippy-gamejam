@@ -35,7 +35,6 @@ public class MainMenuVideo : MonoBehaviour
 
     public void QuitButton()
     {
-        Debug.Log("quit");
         Application.Quit();
     }
 
