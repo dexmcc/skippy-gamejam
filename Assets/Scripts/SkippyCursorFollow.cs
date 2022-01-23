@@ -36,12 +36,15 @@ public class SkippyCursorFollow : MonoBehaviour
     public GameObject hand;
     Animator handAnim;
 
+    bool facingForward;
+
     // Start is called before the first frame update
     void Start()
     {
         clickCount = 0;
         heartFlag = false;
         ending = false;
+        facingForward = false;
         skippy = GameObject.Find("Skippy");
         SkippyTransform = skippy.GetComponent<Transform>();
         skippyNoise = skippy.GetComponent<AudioSource>();
@@ -64,11 +67,14 @@ public class SkippyCursorFollow : MonoBehaviour
 
                 float angle = Mathf.Atan2((mousePosition - SkippyTransform.position).x, (mousePosition - SkippyTransform.position).y) * Mathf.Rad2Deg;
 
-                //Debug.Log(angle);
-
                 AimTowards(angle);
 
-                SkippyTransform.Translate(directionChange * Time.deltaTime);
+                if (!facingForward)
+                {
+                    SkippyTransform.Translate(directionChange * Time.deltaTime);
+                }
+
+                    
 
 
 
@@ -155,6 +161,7 @@ public class SkippyCursorFollow : MonoBehaviour
         {
 
             skippySprite.enabled = true;
+            facingForward = true;
 
             for (int i = 0; i < 8; i++)
             {
@@ -162,6 +169,9 @@ public class SkippyCursorFollow : MonoBehaviour
             }
         } else
         {
+
+            facingForward = false;
+
             skippySprite.enabled = false;
 
             if ((x <= -22.5f) && (x > -67.5f))
