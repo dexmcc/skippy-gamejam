@@ -16,7 +16,7 @@ public class Global : MonoBehaviour
 
     public float explorationStat = 0f;
     public float foodStat = 53f;
-    public float sleepStat = 85f;
+    public float sleepStat = 100f;
     public string hubScene;
 
 

@@ -6,6 +6,7 @@ public class EatMinigamePlayerScript : MonoBehaviour
 {
 
     public float speed = 1;
+    public LayerMask enemyLayer;
 
     private Vector2 move = new Vector2(0, 0);
 
@@ -97,11 +98,15 @@ public class EatMinigamePlayerScript : MonoBehaviour
 
     public void Kill()
     {
-        // Here logic will go to take to main menu n such
-        // TODO, something like an animation instead of just going straight to the hub
-        gameManager.GameOver();
-        //Global.getInstance().gotoHubArea();
-        //Destroy(gameObject);
+
+        if (!paused)
+        {
+            // Here logic will go to take to main menu n such
+            // TODO, something like an animation instead of just going straight to the hub
+            gameManager.GameOver();
+            //Global.getInstance().gotoHubArea();
+            //Destroy(gameObject);
+        }
     }
 
     // Only gameobject with trigger is food, this checks if the player is interacing with food
@@ -112,10 +117,21 @@ public class EatMinigamePlayerScript : MonoBehaviour
 
         ob.TryGetComponent<EatMinigameFoodScript>(out script);
 
+
+
         if (script != null)
         {
             //audioSource.Play();
             script.GivePointAndDestroy();
+        }
+
+
+        print(ob.layer.ToString() + " " + enemyLayer.ToString());
+        // Hardcoded to detect enemy layer b/c wasn't working before
+        if (ob.layer == 7)
+        {
+            print("succ compare");
+            Kill();
         }
     }
 }

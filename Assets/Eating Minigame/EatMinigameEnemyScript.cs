@@ -97,9 +97,9 @@ public class EatMinigameEnemyScript : MonoBehaviour
                 rb.MovePosition(rb.position + ((moveTo + randomSpeedOffset) * (baseSpeed) * Time.fixedDeltaTime));
 
 
-                if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
+                if (Vector3.Distance(transform.position, target.transform.position) < attackRange && !attacking)
                 {
-                    AttackStart();
+                   AttackStart();
                 }
 
             }
@@ -130,7 +130,7 @@ public class EatMinigameEnemyScript : MonoBehaviour
 
 
     // Called in the animation, checks if the player is in range then kills them
-    void Attack()
+    /*void Attack()
     {
         if (!paused && Vector3.Distance(transform.position, target.transform.position) < attackRange)
         {
@@ -138,7 +138,7 @@ public class EatMinigameEnemyScript : MonoBehaviour
             target = null;
         }
         
-    }
+    }*/
 
     // Called at the end of the animation
     public void AttackEnd()

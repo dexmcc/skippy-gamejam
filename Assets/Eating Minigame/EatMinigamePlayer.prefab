@@ -99,6 +99,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
   gameManager: {fileID: 0}
   paused: 0
 --- !u!50 &1591820465209498860
@@ -137,7 +140,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.4
 --- !u!82 &8261804844284895480
 AudioSource:
   m_ObjectHideFlags: 0
