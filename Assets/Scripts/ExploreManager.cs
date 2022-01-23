@@ -26,12 +26,15 @@ public class ExploreManager : MonoBehaviour
 
     GameObject choices;
 
-
-
+    public GameObject skipButton;
+    bool skipActive;
+    bool skipFlag;
 
 
     public void Start()
     {
+        skipActive = false;
+        skipFlag = false;
 
         global = Global.getInstance();
 
@@ -98,6 +101,12 @@ public class ExploreManager : MonoBehaviour
             OpenChoices();
         }
         
+        if ((pauseFlag == false) && (currentVideo.frame >= 100) && (!skipActive))
+        {
+            skipButton.SetActive(true);
+            skipActive = true;
+        }
+
         if (endFlag && ((currentVideo.frame) > 0 && ((currentVideo.isPlaying == false) || ((long)currentVideo.frame == (long)(currentVideo.frameCount - ((long)1)))))) {
             EndExplore();
         }
@@ -108,6 +117,8 @@ public class ExploreManager : MonoBehaviour
     {
         currentVideo.Play();
         endFlag = true;
+        skipFlag = false;
+        skipActive = false;
     }
 
     public void OpenChoices()
@@ -115,6 +126,18 @@ public class ExploreManager : MonoBehaviour
         choices.SetActive(true);
     }
 
-    
+    public void SkipVideo()
+    {
+        if (skipFlag)
+        {
+            currentVideo.playbackSpeed = 1.3f;
+            skipFlag = false;
+        } else
+        {
+            currentVideo.playbackSpeed = 10f;
+            skipFlag = true;
+        }
+
+    }
 
 }
