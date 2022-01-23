@@ -15,48 +15,85 @@ public class EatMinigamePlayerScript : MonoBehaviour
     private AudioSource audioSource; 
 
     [HideInInspector] public EatMinigameGameManager gameManager;
-    [HideInInspector] public bool paused = false; 
+    [HideInInspector] public bool paused = false;
+
+    bool killFlag;
+    bool flashedFlag;
+    SpriteRenderer skippySprite;
+
+    Vector2 lastPos;
+
+    public AudioSource gameOverClip;
 
     // Start is called before the first frame update
     void Start()
     {
+        killFlag = false;
+        flashedFlag = false;
         main = Camera.main;
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+        skippySprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        // Input! Hard coded right now :P
-        
-        if (Input.GetKey(KeyCode.A))
+        if (killFlag)
         {
-            move.x = -1;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            move.x = 1;
-        }
-        else
-        {
-            move.x = 0;
-        }
-
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            move.y = 1;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            move.y = -1;
+            if (flashedFlag)
+            {
+                gameManager.GameOver();
+            } else
+            {
+                if (skippySprite.color.g <= 0.3f)
+                {
+                    flashedFlag = true;
+                } else
+                {
+                    skippySprite.color = new Color (skippySprite.color.r - 0.01f, skippySprite.color.g - 0.01f, skippySprite.color.b);
+                }
+            }
         }
         else
         {
-            move.y = 0; 
+            if (!paused)
+            {
+                // Input! Hard coded right now :P
+
+                if (Input.GetKey(KeyCode.A))
+                {
+                    move.x = -1;
+                }
+                else if (Input.GetKey(KeyCode.D))
+                {
+                    move.x = 1;
+                }
+                else
+                {
+                    move.x = 0;
+                }
+
+
+                if (Input.GetKey(KeyCode.W))
+                {
+                    move.y = 1;
+                }
+                else if (Input.GetKey(KeyCode.S))
+                {
+                    move.y = -1;
+                }
+                else
+                {
+                    move.y = 0;
+                }
+            } else
+            {
+                move.x = 0;
+                move.y = 0;
+            }
         }
+       
     }
 
     // Handles Movement
@@ -89,9 +126,15 @@ public class EatMinigamePlayerScript : MonoBehaviour
                 newPos = main.ViewportToWorldPoint(viewPoint);
 
                 rb.MovePosition(newPos);
+
+                lastPos = rb.position;
             }
 
             
+            
+        } else
+        {
+            rb.MovePosition(lastPos);
         }
     }
 
@@ -101,9 +144,12 @@ public class EatMinigamePlayerScript : MonoBehaviour
 
         if (!paused)
         {
+            killFlag = true;
+            move.x = 0;
+            move.y = 0;
+            rb.MovePosition(lastPos);
             // Here logic will go to take to main menu n such
             // TODO, something like an animation instead of just going straight to the hub
-            gameManager.GameOver();
             //Global.getInstance().gotoHubArea();
             //Destroy(gameObject);
         }
@@ -130,7 +176,7 @@ public class EatMinigamePlayerScript : MonoBehaviour
         // Hardcoded to detect enemy layer b/c wasn't working before
         if (ob.layer == 7)
         {
-            print("succ compare");
+            gameOverClip.Play();
             Kill();
         }
     }

@@ -33,13 +33,16 @@ public class EatMinigameEnemyScript : MonoBehaviour
     private float curOffsetChangeTime = 1;
 
 
-    [HideInInspector] public bool paused; 
+    [HideInInspector] public bool paused;
 
+    //to make sure the monster doesn't just immediately attack skippy if it spawns on top of it
+    float startTimer;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        startTimer = 0;
         rb = GetComponent<Rigidbody2D>();
         animation = GetComponent<Animation>();
         audioSource = GetComponent<AudioSource>();
@@ -59,6 +62,9 @@ public class EatMinigameEnemyScript : MonoBehaviour
 
         if (!paused)
         {
+
+            startTimer++;
+
             if (!attacking && target != null)
             {
                 // Check if the random offsets should be changed, if not, decrement the time.
@@ -96,8 +102,7 @@ public class EatMinigameEnemyScript : MonoBehaviour
 
                 rb.MovePosition(rb.position + ((moveTo + randomSpeedOffset) * (baseSpeed) * Time.fixedDeltaTime));
 
-
-                if (Vector3.Distance(transform.position, target.transform.position) < attackRange && !attacking)
+                if ((Vector3.Distance(transform.position, target.transform.position) < attackRange && !attacking) && (startTimer >= 100f))
                 {
                    AttackStart();
                 }
@@ -112,6 +117,7 @@ public class EatMinigameEnemyScript : MonoBehaviour
         audioSource.clip = growlSounds[Random.Range(0, growlSounds.Length - 1)];
         audioSource.pitch = Random.Range(.85f, 1.15f);
 
+        audioSource.volume = 0.3f;
         audioSource.Play();
 
         curGrowlSoundTime = defaultGrowlSoundTime + Random.Range(-growlSoundTimeOffset, growlSoundTimeOffset);
@@ -145,5 +151,10 @@ public class EatMinigameEnemyScript : MonoBehaviour
     {
         attacking = false;
         animation.Stop();
+    }
+
+    public void Pause()
+    {
+        paused = true;
     }
 }

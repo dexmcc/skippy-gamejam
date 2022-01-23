@@ -65,6 +65,11 @@ public class DreamMinigamePlayerScript : MonoBehaviour
             jump = true;
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Kill();
+        }
+
     }
 
     private void FixedUpdate()

@@ -18,7 +18,7 @@ public class EatMinigameGameManager : MonoBehaviour
     public int foodStatAdd = 6;
     public int foodStatAddOffset = 1;
 
-    public AudioClip gameOverClip;
+
 
 
 
@@ -31,6 +31,9 @@ public class EatMinigameGameManager : MonoBehaviour
     
     public bool initPaused = true;
     public GameObject instructions;
+    public GameObject gameOverText;
+
+    public AudioSource gameOverClip;
 
 
     private void Update()
@@ -43,6 +46,13 @@ public class EatMinigameGameManager : MonoBehaviour
                 TogglePaused();
                 initPaused = false;
                 Destroy(instructions);
+            }
+        } else
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                gameOverClip.Play();
+                GameOver();
             }
         }
     }
@@ -91,8 +101,7 @@ public class EatMinigameGameManager : MonoBehaviour
     public void GameOver()
     {
         TogglePaused();
-        eatSound.clip = gameOverClip;
-        eatSound.Play();
+        gameOverText.SetActive(true);
         animation.Play();
     }
 
@@ -117,7 +126,8 @@ public class EatMinigameGameManager : MonoBehaviour
 
                 if (es != null)
                 {
-                    es.paused = paused; 
+                    es.paused = paused;
+                    es.Pause();
                 }
             }
 
