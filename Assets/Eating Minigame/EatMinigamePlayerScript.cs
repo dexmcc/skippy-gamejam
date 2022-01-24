@@ -63,11 +63,11 @@ public class EatMinigamePlayerScript : MonoBehaviour
             {
                 // Input! Hard coded right now :P
 
-                if (Input.GetKey(KeyCode.A))
+                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
                 {
                     move.x = -1;
                 }
-                else if (Input.GetKey(KeyCode.D))
+                else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
                 {
                     move.x = 1;
                 }
@@ -77,11 +77,11 @@ public class EatMinigamePlayerScript : MonoBehaviour
                 }
 
 
-                if (Input.GetKey(KeyCode.W))
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
                 {
                     move.y = 1;
                 }
-                else if (Input.GetKey(KeyCode.S))
+                else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
                 {
                     move.y = -1;
                 }

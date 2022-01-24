@@ -183,7 +183,7 @@ MonoBehaviour:
   walkEnemyChance: 40
   downSpeed: 2
   sleepStatAdd: 8
-  sleepStatAddOffset: 1
+  sleepStatAddOffset: 3
   player: {fileID: 0}
   paused: 0
   initPause: 1

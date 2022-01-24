@@ -1676,8 +1676,8 @@ MonoBehaviour:
   - {fileID: 93371802}
   - {fileID: 1100107206}
   - {fileID: 1678354972}
-  sleepRemove: 280000001e0000004b000000
-  hungerRemove: 1e000000320000004b000000
+  sleepRemove: 24000000160000003e000000
+  hungerRemove: 1d0000002f00000043000000
   skipButton: {fileID: 641798418}
 --- !u!114 &806183768
 MonoBehaviour:

@@ -1169,7 +1169,7 @@ MonoBehaviour:
   hungerTrack: {fileID: 853510887}
   score: 0
   foodStatAdd: 8
-  foodStatAddOffset: 1
+  foodStatAddOffset: 3
   paused: 0
   initPaused: 1
   instructions: {fileID: 2010918190}
