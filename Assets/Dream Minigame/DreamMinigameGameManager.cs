@@ -311,8 +311,8 @@ public class DreamMinigameGameManager : MonoBehaviour
 
     public void SpeedUp()
     {
-        playerScript.horizontalSpeed *= 1.02f;
-        downSpeed *= 1.03f; 
+        playerScript.horizontalSpeed *= 1.05f;
+        downSpeed *= 1.05f; 
 
     }
 

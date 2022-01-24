@@ -35,6 +35,8 @@ public class EndingSequence : MonoBehaviour
     float endTimer = 0;
     bool endTimerStart;
 
+    Global global;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +50,7 @@ public class EndingSequence : MonoBehaviour
 
         fadeWhite = fader.GetComponent<Image>();
 
+        global = Global.getInstance();
 
     }
 
@@ -91,6 +94,7 @@ public class EndingSequence : MonoBehaviour
                 fadeWhite.color = new Color(fadeWhite.color.r, fadeWhite.color.g, fadeWhite.color.b, fadeWhite.color.a + 0.01f);
                 if (fadeWhite.color.a >= 0.99f)
                 {
+                    global.NewGlobal();
                     SceneManager.LoadScene("Ending");
                 }
             }

@@ -108,7 +108,7 @@ public class EatMinigameEnemyScript : MonoBehaviour
 
 
 
-                if ((Vector3.Distance(transform.position, target.transform.position) < attackRange && !attacking) && (startTimer >= 100f))
+                if ((Vector3.Distance(transform.position, target.transform.position) < attackRange && !attacking) && (startTimer >= 77f))
                 {
                    AttackStart();
                 }

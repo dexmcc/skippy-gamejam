@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; 
+using UnityEngine.SceneManagement;
 
 public class Global : MonoBehaviour
 {
@@ -38,7 +38,7 @@ public class Global : MonoBehaviour
         {
             _instance = this;
 
-            initExplorationChoices(); 
+            initExplorationChoices();
 
             DontDestroyOnLoad(gameObject);
         }
@@ -46,7 +46,14 @@ public class Global : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
+    }
+
+
+    public void NewGlobal()
+    {
+        Destroy(gameObject);
+
     }
 
     private void initExplorationChoices()

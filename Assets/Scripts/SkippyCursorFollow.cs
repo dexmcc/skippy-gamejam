@@ -86,7 +86,10 @@ public class SkippyCursorFollow : MonoBehaviour
                     RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
                     if (hit.collider != null)
                     {
-                        DoSomethingCute();
+                        if (hit.collider.gameObject.tag == "Skippy")
+                        {
+                            DoSomethingCute();
+                        }
                     }
                 }
             }
@@ -95,7 +98,7 @@ public class SkippyCursorFollow : MonoBehaviour
             {
                 timer = timer + 1;
 
-                if (timer < 400f)
+                if (timer < 200f)
                 {
                     hand.SetActive(true);
                     currentObject.SetActive(true);

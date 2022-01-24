@@ -128,15 +128,7 @@ public class ExploreManager : MonoBehaviour
 
     public void SkipVideo()
     {
-        if (skipFlag)
-        {
-            currentVideo.playbackSpeed = 1.3f;
-            skipFlag = false;
-        } else
-        {
-            currentVideo.playbackSpeed = 10f;
-            skipFlag = true;
-        }
+        currentVideo.frame = pauseFrames[nextExplore] - 30;
 
     }
 
